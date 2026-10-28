@@ -1,2 +1,2 @@
-# ccbom
-Canonical Cryptographic Bill of Materials (CCBOM)
+# 2cbom
+Canonical Cryptographic Bill of Materials (2CBOM)
