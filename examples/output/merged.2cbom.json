@@ -1,0 +1,2690 @@
+{
+  "2cbomVersion": "1.0",
+  "assets": [
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 128,
+        "cryptoFunctions": [
+          "decrypt",
+          "encrypt"
+        ],
+        "executionEnvironment": "software-plain-ram",
+        "family": "aes",
+        "implementationPlatform": "generic",
+        "mode": "gcm",
+        "nistQuantumSecurityLevel": 1,
+        "notes": [
+          "oid-fill:2.16.840.1.101.3.4.1.6"
+        ],
+        "oid": "2.16.840.1.101.3.4.1.6",
+        "parameterSet": "128",
+        "primitive": "ae",
+        "standards": [
+          "FIPS 197",
+          "NIST SP 800-38A",
+          "NIST SP 800-38D"
+        ],
+        "toolPrimitive": "ae",
+        "toolProperties": {
+          "codeql:query": "java/crypto/use-of-aes"
+        }
+      },
+      "aliases": [
+        "AES",
+        "AES-128-GCM",
+        "AES128-GCM",
+        "aes-128-gcm"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 128,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "low",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 1,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "catalogue family 'aes': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "Cipher.getInstance(\"AES/GCM/NoPadding\")",
+          "line": 42,
+          "location": "src/main/java/com/example/payments/CryptoUtil.java",
+          "method": "static-source",
+          "offset": 23,
+          "source": "src-36d615754603",
+          "tool": "cbomkit"
+        },
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.2 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        },
+        {
+          "confidence": 0.95,
+          "context": "AES/GCM/NoPadding",
+          "line": 42,
+          "location": "src/main/java/com/example/payments/CryptoUtil.java",
+          "method": "static-source",
+          "offset": 23,
+          "source": "src-6b22f6d672d9",
+          "symbol": "Cipher.getInstance",
+          "tool": "ibm-cbom"
+        },
+        {
+          "confidence": 1.0,
+          "line": 42,
+          "location": "src/main/java/com/example/payments/CryptoUtil.java",
+          "method": "static-source",
+          "source": "src-e5fc2a359bba",
+          "symbol": "javax.crypto.Cipher.getInstance",
+          "tool": "cryptobom-forge"
+        }
+      ],
+      "id": "2cbom:alg:aes-128-gcm",
+      "name": "aes-128-gcm",
+      "sources": [
+        "src-36d615754603",
+        "src-6b22f6d672d9",
+        "src-e5fc2a359bba"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 256,
+        "cryptoFunctions": [
+          "decrypt",
+          "encrypt"
+        ],
+        "family": "aes",
+        "mode": "cbc",
+        "nistQuantumSecurityLevel": 5,
+        "notes": [
+          "oid-fill:2.16.840.1.101.3.4.1.42"
+        ],
+        "oid": "2.16.840.1.101.3.4.1.42",
+        "padding": "pkcs7",
+        "parameterSet": "256",
+        "primitive": "block-cipher",
+        "standards": [
+          "FIPS 197",
+          "NIST SP 800-38A",
+          "NIST SP 800-38D"
+        ],
+        "toolPrimitive": "block-cipher"
+      },
+      "aliases": [
+        "aes-256-cbc"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 256,
+        "cnsa2": true,
+        "fipsApproved": true,
+        "migrationPriority": "none",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 5,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "catalogue family 'aes': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "Cipher(algorithms.AES(key), modes.CBC(iv))",
+          "line": 18,
+          "location": "worker/vault.py",
+          "method": "static-source",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        }
+      ],
+      "id": "2cbom:alg:aes-256-cbc-pkcs7",
+      "name": "aes-256-cbc-pkcs7",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 256,
+        "family": "aes",
+        "mode": "gcm",
+        "nistQuantumSecurityLevel": 5,
+        "oid": "2.16.840.1.101.3.4.1.46",
+        "parameterSet": "256",
+        "primitive": "ae",
+        "standards": [
+          "FIPS 197",
+          "NIST SP 800-38A",
+          "NIST SP 800-38D"
+        ]
+      },
+      "aliases": [
+        "aes-256-gcm"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 256,
+        "cnsa2": true,
+        "fipsApproved": true,
+        "migrationPriority": "none",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 5,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "catalogue family 'aes': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.3 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        },
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.3 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:alg:aes-256-gcm",
+      "name": "aes-256-gcm",
+      "sources": [
+        "src-2362e304470a",
+        "src-e275c2b5f4f5"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 256,
+        "family": "chacha20-poly1305",
+        "nistQuantumSecurityLevel": 5,
+        "oid": "1.2.840.113549.1.9.16.3.18",
+        "primitive": "ae",
+        "standards": [
+          "RFC 8439"
+        ]
+      },
+      "aliases": [
+        "chacha20-poly1305"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 256,
+        "cnsa2": false,
+        "fipsApproved": false,
+        "migrationPriority": "low",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 5,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "catalogue family 'chacha20-poly1305': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.3 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        }
+      ],
+      "id": "2cbom:alg:chacha20-poly1305",
+      "name": "chacha20-poly1305",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 56,
+        "cryptoFunctions": [
+          "decrypt"
+        ],
+        "family": "des",
+        "mode": "cbc",
+        "nistQuantumSecurityLevel": 0,
+        "primitive": "block-cipher",
+        "standards": [
+          "FIPS 46-3 (withdrawn)"
+        ],
+        "toolPrimitive": "block-cipher",
+        "toolProperties": {
+          "codeql:query": "java/weak-cryptographic-algorithm"
+        }
+      },
+      "aliases": [
+        "DES"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 56,
+        "cnsa2": false,
+        "fipsApproved": false,
+        "migrationPriority": "immediate",
+        "nistIr8547": "disallowed",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "classically-weak",
+        "rationale": [
+          "catalogue family 'des': classically-weak",
+          "classical strength 56 bits is below the 112-bit floor"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "line": 71,
+          "location": "src/main/java/com/example/payments/LegacyToken.java",
+          "method": "static-source",
+          "source": "src-e5fc2a359bba",
+          "symbol": "javax.crypto.Cipher.getInstance",
+          "tool": "cryptobom-forge"
+        }
+      ],
+      "id": "2cbom:alg:des-cbc",
+      "name": "des-cbc",
+      "sources": [
+        "src-e5fc2a359bba"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "family": "ecdh",
+        "primitive": "key-agree",
+        "standards": [
+          "NIST SP 800-186",
+          "NIST SP 800-56A"
+        ]
+      },
+      "aliases": [
+        "ecdh"
+      ],
+      "assessment": {
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "high",
+        "nistIr8547": "disallowed-after-2035",
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "catalogue family 'ecdh': quantum-vulnerable",
+          "public-key algorithm broken by Shor's algorithm",
+          "security level unknown for this parameter set"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.2 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        }
+      ],
+      "id": "2cbom:alg:ecdh",
+      "name": "ecdh",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 128,
+        "cryptoFunctions": [
+          "verify"
+        ],
+        "curve": "p256",
+        "family": "ecdsa",
+        "hash": "sha2-256",
+        "nistQuantumSecurityLevel": 0,
+        "oid": "1.2.840.10045.4.3.2",
+        "primitive": "signature",
+        "standards": [
+          "FIPS 186-5",
+          "NIST SP 800-186"
+        ],
+        "toolPrimitive": "signature"
+      },
+      "aliases": [
+        "ecdsa-with-SHA256"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 128,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "medium",
+        "nistIr8547": "disallowed-after-2035",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "catalogue family 'ecdsa': quantum-vulnerable",
+          "public-key algorithm broken by Shor's algorithm"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "public_key.verify(sig, data, ec.ECDSA(hashes.SHA256()))",
+          "line": 40,
+          "location": "worker/webhooks.py",
+          "method": "static-source",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        }
+      ],
+      "id": "2cbom:alg:ecdsa-p256-sha2-256",
+      "name": "ecdsa-p256-sha2-256",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 128,
+        "cryptoFunctions": [
+          "tag"
+        ],
+        "family": "hmac",
+        "hash": "sha2-256",
+        "nistQuantumSecurityLevel": 2,
+        "oid": "1.2.840.113549.2.9",
+        "primitive": "mac",
+        "standards": [
+          "FIPS 198-1",
+          "RFC 2104"
+        ],
+        "toolPrimitive": "mac"
+      },
+      "aliases": [
+        "HMAC-SHA256"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 128,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "low",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 2,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "catalogue family 'hmac': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "Mac.getInstance(\"HmacSHA256\")",
+          "line": 54,
+          "location": "src/main/java/com/example/payments/Webhook.java",
+          "method": "static-source",
+          "offset": 19,
+          "source": "src-36d615754603",
+          "tool": "cbomkit"
+        }
+      ],
+      "id": "2cbom:alg:hmac-sha2-256",
+      "name": "hmac-sha2-256",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 192,
+        "cryptoFunctions": [
+          "sign",
+          "verify"
+        ],
+        "family": "ml-dsa",
+        "nistQuantumSecurityLevel": 3,
+        "notes": [
+          "pre-standard-name:dilithium"
+        ],
+        "oid": "2.16.840.1.101.3.4.3.18",
+        "parameterSet": "65",
+        "preStandardNames": [
+          "Dilithium3"
+        ],
+        "primitive": "signature",
+        "standards": [
+          "FIPS 204"
+        ],
+        "toolPrimitive": "signature"
+      },
+      "aliases": [
+        "Dilithium3"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 192,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "low",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 3,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "NIST post-quantum family",
+          "catalogue family 'ml-dsa': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "location": "usr/lib/liboqs.so.0.12",
+          "method": "static-binary",
+          "offset": 405120,
+          "source": "src-e275c2b5f4f5",
+          "symbol": "pqcrystals_dilithium3_ref_signature",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:alg:ml-dsa-65",
+      "name": "ml-dsa-65",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 192,
+        "cryptoFunctions": [
+          "decapsulate",
+          "encapsulate"
+        ],
+        "executionEnvironment": "software-plain-ram",
+        "family": "ml-kem",
+        "nistQuantumSecurityLevel": 3,
+        "oid": "2.16.840.1.101.3.4.4.2",
+        "parameterSet": "768",
+        "primitive": "kem",
+        "standards": [
+          "FIPS 203"
+        ],
+        "toolPrimitive": "kem"
+      },
+      "aliases": [
+        "ML-KEM-768",
+        "ml-kem-768"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 192,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "low",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 3,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "NIST post-quantum family",
+          "catalogue family 'ml-kem': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:alg:x25519+ml-kem-768 by rule closure.constituents",
+          "method": "derived",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        },
+        {
+          "confidence": 1.0,
+          "context": "Groups = X25519MLKEM768:X25519",
+          "line": 112,
+          "location": "etc/ssl/openssl.cnf",
+          "method": "static-binary",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:alg:ml-kem-768",
+      "name": "ml-kem-768",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 128,
+        "cryptoFunctions": [
+          "keyderive"
+        ],
+        "family": "pbkdf2",
+        "hash": "sha2-256",
+        "nistQuantumSecurityLevel": 2,
+        "oid": "1.2.840.113549.1.5.12",
+        "primitive": "kdf",
+        "standards": [
+          "NIST SP 800-132",
+          "RFC 8018"
+        ],
+        "toolPrimitive": "kdf"
+      },
+      "aliases": [
+        "pbkdf2-hmac-sha256"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 128,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "low",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 2,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "catalogue family 'pbkdf2': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, iterations=600000)",
+          "line": 11,
+          "location": "worker/vault.py",
+          "method": "static-source",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        }
+      ],
+      "id": "2cbom:alg:pbkdf2-sha2-256",
+      "name": "pbkdf2-sha2-256",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "family": "rsa",
+        "oid": "1.2.840.113549.1.1.1",
+        "primitive": "pke",
+        "standards": [
+          "FIPS 186-5",
+          "NIST SP 800-56B",
+          "RFC 8017"
+        ]
+      },
+      "aliases": [
+        "rsa",
+        "rsaEncryption"
+      ],
+      "assessment": {
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "high",
+        "nistIr8547": "disallowed-after-2035",
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "RSA-4096 is rated conservatively at 128 bits (SP 800-57 lists 3072 -> 128 and 7680 -> 192).",
+          "catalogue family 'rsa': quantum-vulnerable",
+          "public-key algorithm broken by Shor's algorithm",
+          "security level unknown for this parameter set"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4 by rule closure.certificate-subject-key",
+          "method": "derived",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        }
+      ],
+      "id": "2cbom:alg:rsa",
+      "name": "rsa",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 112,
+        "cryptoFunctions": [
+          "keygen"
+        ],
+        "family": "rsa",
+        "nistQuantumSecurityLevel": 0,
+        "oid": "1.2.840.113549.1.1.1",
+        "parameterSet": "2048",
+        "primitive": "pke",
+        "standards": [
+          "FIPS 186-5",
+          "NIST SP 800-56B",
+          "RFC 8017"
+        ],
+        "toolPrimitive": "pke"
+      },
+      "aliases": [
+        "RSA"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "high",
+        "nistIr8547": "deprecated-after-2030",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "RSA-4096 is rated conservatively at 128 bits (SP 800-57 lists 3072 -> 128 and 7680 -> 192).",
+          "catalogue family 'rsa': quantum-vulnerable",
+          "public-key algorithm broken by Shor's algorithm"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "rsa.generate_private_key(public_exponent=65537, key_size=2048)",
+          "line": 22,
+          "location": "worker/keys.py",
+          "method": "static-source",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        },
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:key:private-key:loc:9940fc91b8e14941fd22aabf by rule closure.material-algorithm",
+          "method": "derived",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        },
+        {
+          "confidence": 1.0,
+          "location": "etc/ssl/certs/server.crt",
+          "method": "static-binary",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:alg:rsa-2048",
+      "name": "rsa-2048",
+      "sources": [
+        "src-2362e304470a",
+        "src-6b22f6d672d9",
+        "src-e275c2b5f4f5"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 112,
+        "cryptoFunctions": [
+          "decrypt",
+          "encrypt",
+          "keygen"
+        ],
+        "executionEnvironment": "software-plain-ram",
+        "family": "rsa",
+        "nistQuantumSecurityLevel": 0,
+        "oid": "1.2.840.113549.1.1.7",
+        "padding": "oaep",
+        "parameterSet": "2048",
+        "primitive": "pke",
+        "standards": [
+          "FIPS 186-5",
+          "NIST SP 800-56B",
+          "RFC 8017"
+        ],
+        "toolPrimitive": "pke"
+      },
+      "aliases": [
+        "RSA-2048"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "high",
+        "nistIr8547": "deprecated-after-2030",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "RSA-4096 is rated conservatively at 128 bits (SP 800-57 lists 3072 -> 128 and 7680 -> 192).",
+          "catalogue family 'rsa': quantum-vulnerable",
+          "public-key algorithm broken by Shor's algorithm"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "KeyPairGenerator.getInstance(\"RSA\").initialize(2048)",
+          "line": 31,
+          "location": "src/main/java/com/example/payments/KeyExchange.java",
+          "method": "static-source",
+          "offset": 8,
+          "source": "src-36d615754603",
+          "tool": "cbomkit"
+        },
+        {
+          "confidence": 1.0,
+          "context": "Cipher.getInstance(\"RSA/ECB/OAEPWithSHA-256AndMGF1Padding\")",
+          "line": 77,
+          "location": "src/main/java/com/example/payments/KeyExchange.java",
+          "method": "static-source",
+          "offset": 12,
+          "source": "src-36d615754603",
+          "tool": "cbomkit"
+        },
+        {
+          "confidence": 1.0,
+          "line": 31,
+          "location": "src/main/java/com/example/payments/KeyExchange.java",
+          "method": "static-source",
+          "source": "src-6b22f6d672d9",
+          "symbol": "KeyPairGenerator",
+          "tool": "ibm-cbom"
+        }
+      ],
+      "id": "2cbom:alg:rsa-2048-oaep",
+      "name": "rsa-2048-oaep",
+      "sources": [
+        "src-36d615754603",
+        "src-6b22f6d672d9"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 112,
+        "cryptoFunctions": [
+          "sign",
+          "verify"
+        ],
+        "family": "rsa",
+        "hash": "sha2-256",
+        "nistQuantumSecurityLevel": 0,
+        "notes": [
+          "identity-from-oid:1.2.840.113549.1.1.11"
+        ],
+        "oid": "1.2.840.113549.1.1.11",
+        "padding": "pkcs1v15",
+        "primitive": "signature",
+        "standards": [
+          "FIPS 186-5",
+          "NIST SP 800-56B",
+          "RFC 8017"
+        ],
+        "toolPrimitive": "signature"
+      },
+      "aliases": [
+        "1.2.840.113549.1.1.11",
+        "RSA",
+        "SHA256withRSA",
+        "sha256WithRSAEncryption"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "medium",
+        "nistIr8547": "deprecated-after-2030",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "RSA-4096 is rated conservatively at 128 bits (SP 800-57 lists 3072 -> 128 and 7680 -> 192).",
+          "catalogue family 'rsa': quantum-vulnerable",
+          "public-key algorithm broken by Shor's algorithm"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "Signature.getInstance(\"SHA256withRSA\")",
+          "line": 23,
+          "location": "src/main/java/com/example/payments/Signer.java",
+          "method": "static-source",
+          "offset": 14,
+          "source": "src-36d615754603",
+          "tool": "cbomkit"
+        },
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4 by rule closure.certificate-signature",
+          "method": "derived",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        },
+        {
+          "confidence": 1.0,
+          "location": "etc/ssl/certs/server.crt",
+          "method": "static-binary",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        },
+        {
+          "confidence": 1.0,
+          "line": 23,
+          "location": "src/main/java/com/example/payments/Signer.java",
+          "method": "static-source",
+          "source": "src-e5fc2a359bba",
+          "symbol": "java.security.Signature.getInstance",
+          "tool": "cryptobom-forge"
+        }
+      ],
+      "id": "2cbom:alg:rsa-pkcs1v15-sha2-256",
+      "name": "rsa-pkcs1v15-sha2-256",
+      "sources": [
+        "src-36d615754603",
+        "src-6b22f6d672d9",
+        "src-e275c2b5f4f5",
+        "src-e5fc2a359bba"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 80,
+        "cryptoFunctions": [
+          "digest"
+        ],
+        "family": "sha1",
+        "nistQuantumSecurityLevel": 0,
+        "oid": "1.3.14.3.2.26",
+        "primitive": "hash",
+        "standards": [
+          "FIPS 180-4 (SHA-1 disallowed for signatures, SP 800-131A)"
+        ],
+        "toolPrimitive": "hash",
+        "toolProperties": {
+          "codeql:query": "java/weak-cryptographic-algorithm"
+        }
+      },
+      "aliases": [
+        "SHA-1",
+        "sha1"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 80,
+        "cnsa2": false,
+        "fipsApproved": false,
+        "migrationPriority": "immediate",
+        "nistIr8547": "disallowed",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "classically-weak",
+        "rationale": [
+          "Collision attacks are practical (SHAttered).",
+          "catalogue family 'sha1': classically-weak",
+          "classical strength 80 bits is below the 112-bit floor"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.2 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        },
+        {
+          "confidence": 1.0,
+          "line": 66,
+          "location": "src/main/java/com/example/payments/LegacyToken.java",
+          "method": "static-source",
+          "source": "src-e5fc2a359bba",
+          "symbol": "java.security.MessageDigest.getInstance",
+          "tool": "cryptobom-forge"
+        }
+      ],
+      "id": "2cbom:alg:sha1",
+      "name": "sha1",
+      "sources": [
+        "src-6b22f6d672d9",
+        "src-e5fc2a359bba"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 128,
+        "cryptoFunctions": [
+          "digest"
+        ],
+        "family": "sha2",
+        "nistQuantumSecurityLevel": 2,
+        "notes": [
+          "oid-fill:2.16.840.1.101.3.4.2.1"
+        ],
+        "oid": "2.16.840.1.101.3.4.2.1",
+        "parameterSet": "256",
+        "primitive": "hash",
+        "standards": [
+          "FIPS 180-4"
+        ],
+        "toolPrimitive": "hash"
+      },
+      "aliases": [
+        "SHA256",
+        "sha2-256",
+        "sha256"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 128,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "low",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 2,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "catalogue family 'sha2': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.3 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        },
+        {
+          "confidence": 1.0,
+          "line": 7,
+          "location": "worker/integrity.py",
+          "method": "static-source",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        },
+        {
+          "confidence": 1.0,
+          "context": "MessageDigest.getInstance(\"SHA-256\")",
+          "line": 88,
+          "location": "src/main/java/com/example/payments/CryptoUtil.java",
+          "method": "static-source",
+          "offset": 20,
+          "source": "src-36d615754603",
+          "tool": "cbomkit"
+        },
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.2 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        }
+      ],
+      "id": "2cbom:alg:sha2-256",
+      "name": "sha2-256",
+      "sources": [
+        "src-2362e304470a",
+        "src-36d615754603",
+        "src-6b22f6d672d9"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 192,
+        "family": "sha2",
+        "nistQuantumSecurityLevel": 4,
+        "oid": "2.16.840.1.101.3.4.2.2",
+        "parameterSet": "384",
+        "primitive": "hash",
+        "standards": [
+          "FIPS 180-4"
+        ]
+      },
+      "aliases": [
+        "sha2-384"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 192,
+        "cnsa2": true,
+        "fipsApproved": true,
+        "migrationPriority": "none",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 4,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "catalogue family 'sha2': quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.3 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        },
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.3 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:alg:sha2-384",
+      "name": "sha2-384",
+      "sources": [
+        "src-2362e304470a",
+        "src-e275c2b5f4f5"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 112,
+        "family": "tdea",
+        "mode": "cbc",
+        "nistQuantumSecurityLevel": 0,
+        "primitive": "block-cipher",
+        "standards": [
+          "NIST SP 800-67 (withdrawn for encryption, SP 800-131A)"
+        ]
+      },
+      "aliases": [
+        "tdea-cbc"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "fipsApproved": false,
+        "migrationPriority": "immediate",
+        "nistIr8547": "disallowed",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "classically-weak",
+        "rationale": [
+          "64-bit block (Sweet32); encryption disallowed by NIST after 2023.",
+          "catalogue family 'tdea': classically-weak"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:proto:tls-1.2 by rule closure.protocol-suites",
+          "method": "derived",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        }
+      ],
+      "id": "2cbom:alg:tdea-cbc",
+      "name": "tdea-cbc",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 128,
+        "family": "x25519",
+        "nistQuantumSecurityLevel": 0,
+        "oid": "1.3.101.110",
+        "primitive": "key-agree",
+        "standards": [
+          "NIST SP 800-186",
+          "RFC 7748"
+        ]
+      },
+      "aliases": [
+        "x25519"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 128,
+        "cnsa2": false,
+        "fipsApproved": true,
+        "migrationPriority": "high",
+        "nistIr8547": "disallowed-after-2035",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "catalogue family 'x25519': quantum-vulnerable",
+          "public-key algorithm broken by Shor's algorithm"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "derived from 2cbom:alg:x25519+ml-kem-768 by rule closure.constituents",
+          "method": "derived",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:alg:x25519",
+      "name": "x25519",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "algorithm": {
+        "classicalSecurityLevel": 128,
+        "components": [
+          "2cbom:alg:ml-kem-768",
+          "2cbom:alg:x25519"
+        ],
+        "cryptoFunctions": [
+          "keyderive"
+        ],
+        "family": "x25519+ml-kem-768",
+        "nistQuantumSecurityLevel": 3,
+        "primitive": "combiner",
+        "standards": [
+          "draft-ietf-tls-ecdhe-mlkem"
+        ],
+        "toolPrimitive": "combiner"
+      },
+      "aliases": [
+        "X25519MLKEM768"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 128,
+        "cnsa2": false,
+        "migrationPriority": "low",
+        "nistIr8547": "acceptable",
+        "nistQuantumSecurityLevel": 3,
+        "quantumClass": "quantum-safe",
+        "rationale": [
+          "constituent 2cbom:alg:ml-kem-768: quantum-safe",
+          "constituent 2cbom:alg:x25519: quantum-vulnerable",
+          "hybrid combiner: secure if at least one constituent is quantum-safe and none is classically weak"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "Groups = X25519MLKEM768:X25519",
+          "line": 112,
+          "location": "etc/ssl/openssl.cnf",
+          "method": "static-binary",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:alg:x25519+ml-kem-768",
+      "name": "x25519+ml-kem-768",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "type": "algorithm",
+      "unresolved": false
+    },
+    {
+      "aliases": [
+        "server.crt"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "migrationPriority": "medium",
+        "nistIr8547": "deprecated-after-2030",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "certificate assessed as the worst of signature and subject-key algorithms",
+          "certificate constituent 2cbom:alg:rsa-2048: quantum-vulnerable",
+          "certificate constituent 2cbom:alg:rsa-pkcs1v15-sha2-256: quantum-vulnerable",
+          "certificate constituent 2cbom:alg:rsa: quantum-vulnerable"
+        ]
+      },
+      "certificate": {
+        "extension": "crt",
+        "fingerprint": "sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+        "format": "X.509",
+        "identityBasis": "fingerprint",
+        "issuer": "CN=Example Issuing CA,O=Example Corp,C=CA",
+        "notAfter": "2026-01-15T23:59:59Z",
+        "notBefore": "2024-01-15T00:00:00Z",
+        "signatureAlgorithm": "2cbom:alg:rsa-pkcs1v15-sha2-256",
+        "subject": "CN=api.payments.example.com,O=Example Corp,C=CA",
+        "subjectPublicKeyAlgorithm": "2cbom:alg:rsa"
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "line": 1,
+          "location": "deploy/tls/server.crt",
+          "method": "static-source",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        },
+        {
+          "confidence": 1.0,
+          "location": "etc/ssl/certs/server.crt",
+          "method": "static-binary",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      "name": "CN=api.payments.example.com,O=Example Corp,C=CA",
+      "sources": [
+        "src-6b22f6d672d9",
+        "src-e275c2b5f4f5"
+      ],
+      "type": "certificate",
+      "unresolved": false
+    },
+    {
+      "aliases": [
+        "server.key"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "migrationPriority": "high",
+        "nistIr8547": "deprecated-after-2030",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "key material constituent 2cbom:alg:rsa-2048: quantum-vulnerable",
+          "key material inherits the assessment of its algorithm"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "line": 1,
+          "location": "deploy/tls/server.key",
+          "method": "static-source",
+          "source": "src-6b22f6d672d9",
+          "tool": "ibm-cbom"
+        }
+      ],
+      "id": "2cbom:key:private-key:loc:9940fc91b8e14941fd22aabf",
+      "material": {
+        "algorithm": "2cbom:alg:rsa-2048",
+        "algorithms": [
+          "2cbom:alg:rsa-2048"
+        ],
+        "format": "PEM",
+        "identityBasis": "location",
+        "size": 2048,
+        "type": "private-key"
+      },
+      "name": "private-key (server.key)",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "type": "related-crypto-material",
+      "unresolved": false
+    },
+    {
+      "aliases": [
+        "server.pem"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "migrationPriority": "high",
+        "nistIr8547": "deprecated-after-2030",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "key material constituent 2cbom:alg:rsa-2048: quantum-vulnerable",
+          "key material inherits the assessment of its algorithm"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "line": 1,
+          "location": "deploy/keys/server.pem",
+          "method": "static-source",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        }
+      ],
+      "id": "2cbom:key:private-key:loc:e22a1f2a68d7ffddd2733622",
+      "material": {
+        "algorithm": "2cbom:alg:rsa-2048",
+        "algorithms": [
+          "2cbom:alg:rsa-2048"
+        ],
+        "format": "PEM",
+        "identityBasis": "location",
+        "size": 2048,
+        "state": "active",
+        "type": "private-key"
+      },
+      "name": "private-key (server.pem)",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "type": "related-crypto-material",
+      "unresolved": false
+    },
+    {
+      "aliases": [
+        "server.crt public key"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "migrationPriority": "high",
+        "nistIr8547": "deprecated-after-2030",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "key material constituent 2cbom:alg:rsa-2048: quantum-vulnerable",
+          "key material inherits the assessment of its algorithm"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "location": "etc/ssl/certs/server.crt",
+          "method": "static-binary",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:key:public-key:loc:37fffc6fd0dfba644509ea11",
+      "material": {
+        "algorithm": "2cbom:alg:rsa-2048",
+        "algorithms": [
+          "2cbom:alg:rsa-2048"
+        ],
+        "format": "DER",
+        "identityBasis": "location",
+        "size": 2048,
+        "type": "public-key"
+      },
+      "name": "public-key (server.crt public key)",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "type": "related-crypto-material",
+      "unresolved": false
+    },
+    {
+      "aliases": [
+        "TLS",
+        "TLSv1.2"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 80,
+        "cnsa2": false,
+        "migrationPriority": "immediate",
+        "nistIr8547": "disallowed",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "classically-weak",
+        "rationale": [
+          "protocol constituent 2cbom:alg:aes-128-gcm: quantum-safe",
+          "protocol constituent 2cbom:alg:ecdh: quantum-vulnerable",
+          "protocol constituent 2cbom:alg:rsa: quantum-vulnerable",
+          "protocol constituent 2cbom:alg:sha1: classically-weak",
+          "protocol constituent 2cbom:alg:sha2-256: quantum-safe",
+          "protocol constituent 2cbom:alg:tdea-cbc: classically-weak",
+          "protocol constituent 2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4: quantum-vulnerable",
+          "suite TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256: quantum-vulnerable",
+          "suite TLS_RSA_WITH_3DES_EDE_CBC_SHA: classically-weak"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "SSLContext.getInstance(\"TLSv1.2\")",
+          "line": 19,
+          "location": "src/main/java/com/example/payments/HttpClientFactory.java",
+          "method": "static-source",
+          "offset": 30,
+          "source": "src-36d615754603",
+          "tool": "cbomkit"
+        },
+        {
+          "confidence": 1.0,
+          "line": 27,
+          "location": "deploy/nginx.conf",
+          "method": "static-source",
+          "source": "src-6b22f6d672d9",
+          "symbol": "ssl_ciphers",
+          "tool": "ibm-cbom"
+        },
+        {
+          "confidence": 1.0,
+          "line": 28,
+          "location": "deploy/nginx.conf",
+          "method": "static-source",
+          "source": "src-6b22f6d672d9",
+          "symbol": "ssl_ciphers",
+          "tool": "ibm-cbom"
+        }
+      ],
+      "id": "2cbom:proto:tls-1.2",
+      "name": "tls 1.2",
+      "protocol": {
+        "cipherSuites": [
+          {
+            "algorithms": [
+              "2cbom:alg:aes-128-gcm",
+              "2cbom:alg:ecdh",
+              "2cbom:alg:rsa",
+              "2cbom:alg:sha2-256"
+            ],
+            "identifier": "0xc02f",
+            "keyExchangeKnown": true,
+            "name": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+          },
+          {
+            "algorithms": [
+              "2cbom:alg:rsa",
+              "2cbom:alg:sha1",
+              "2cbom:alg:tdea-cbc"
+            ],
+            "identifier": "0x000a",
+            "keyExchangeKnown": true,
+            "name": "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+          }
+        ],
+        "references": [
+          "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+        ],
+        "type": "tls",
+        "version": "1.2"
+      },
+      "sources": [
+        "src-36d615754603",
+        "src-6b22f6d672d9"
+      ],
+      "type": "protocol",
+      "unresolved": false
+    },
+    {
+      "aliases": [
+        "TLS 1.3"
+      ],
+      "assessment": {
+        "classicalSecurityLevel": 112,
+        "cnsa2": false,
+        "migrationPriority": "medium",
+        "nistIr8547": "deprecated-after-2030",
+        "nistQuantumSecurityLevel": 0,
+        "quantumClass": "quantum-vulnerable",
+        "rationale": [
+          "TLS 1.3 key exchange taken from the referenced groups: 2cbom:alg:x25519+ml-kem-768",
+          "protocol constituent 2cbom:alg:aes-256-gcm: quantum-safe",
+          "protocol constituent 2cbom:alg:chacha20-poly1305: quantum-safe",
+          "protocol constituent 2cbom:alg:sha2-256: quantum-safe",
+          "protocol constituent 2cbom:alg:sha2-384: quantum-safe",
+          "protocol constituent 2cbom:alg:x25519+ml-kem-768: quantum-safe",
+          "protocol constituent 2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4: quantum-vulnerable",
+          "suite TLS_AES_256_GCM_SHA384: quantum-safe",
+          "suite TLS_CHACHA20_POLY1305_SHA256: quantum-safe"
+        ]
+      },
+      "evidence": [
+        {
+          "confidence": 1.0,
+          "context": "ssl.create_default_context(); ctx.minimum_version = TLSVersion.TLSv1_3",
+          "line": 15,
+          "location": "worker/http.py",
+          "method": "static-source",
+          "source": "src-2362e304470a",
+          "tool": "cdxgen"
+        },
+        {
+          "confidence": 1.0,
+          "line": 110,
+          "location": "etc/ssl/openssl.cnf",
+          "method": "static-binary",
+          "source": "src-e275c2b5f4f5",
+          "tool": "cbomkit-theia"
+        }
+      ],
+      "id": "2cbom:proto:tls-1.3",
+      "name": "tls 1.3",
+      "protocol": {
+        "cipherSuites": [
+          {
+            "algorithms": [
+              "2cbom:alg:aes-256-gcm",
+              "2cbom:alg:sha2-384"
+            ],
+            "identifier": "0x1302",
+            "keyExchangeKnown": false,
+            "name": "TLS_AES_256_GCM_SHA384"
+          },
+          {
+            "algorithms": [
+              "2cbom:alg:chacha20-poly1305",
+              "2cbom:alg:sha2-256"
+            ],
+            "identifier": "0x1303",
+            "keyExchangeKnown": false,
+            "name": "TLS_CHACHA20_POLY1305_SHA256"
+          }
+        ],
+        "references": [
+          "2cbom:alg:x25519+ml-kem-768",
+          "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+        ],
+        "type": "tls",
+        "version": "1.3"
+      },
+      "sources": [
+        "src-2362e304470a",
+        "src-e275c2b5f4f5"
+      ],
+      "type": "protocol",
+      "unresolved": false
+    }
+  ],
+  "components": [
+    {
+      "aliases": [
+        "payments-service"
+      ],
+      "id": "2cbom:comp:payments-service@3.4.1",
+      "name": "payments-service",
+      "root": true,
+      "sources": [
+        "src-36d615754603",
+        "src-6b22f6d672d9",
+        "src-e5fc2a359bba"
+      ],
+      "type": "application",
+      "version": "3.4.1"
+    },
+    {
+      "aliases": [
+        "openssl"
+      ],
+      "id": "2cbom:comp:pkg:generic/openssl@3.5.0",
+      "name": "openssl",
+      "purl": "pkg:generic/openssl@3.5.0",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "type": "library",
+      "version": "3.5.0"
+    },
+    {
+      "aliases": [
+        "bcprov-jdk18on"
+      ],
+      "group": "org.bouncycastle",
+      "id": "2cbom:comp:pkg:maven/org.bouncycastle/bcprov-jdk18on@1.78",
+      "name": "bcprov-jdk18on",
+      "purl": "pkg:maven/org.bouncycastle/bcprov-jdk18on@1.78",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "type": "library",
+      "version": "1.78"
+    },
+    {
+      "aliases": [
+        "payments-service"
+      ],
+      "id": "2cbom:comp:pkg:oci/payments-service@sha256%3A2b6c",
+      "name": "payments-service",
+      "purl": "pkg:oci/payments-service@sha256%3A2b6c?tag=3.4.1",
+      "root": true,
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "type": "container",
+      "version": "3.4.1"
+    },
+    {
+      "aliases": [
+        "cryptography"
+      ],
+      "id": "2cbom:comp:pkg:pypi/cryptography@43.0.1",
+      "name": "cryptography",
+      "purl": "pkg:pypi/cryptography@43.0.1",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "type": "library",
+      "version": "43.0.1"
+    },
+    {
+      "aliases": [
+        "payments-worker"
+      ],
+      "id": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "name": "payments-worker",
+      "purl": "pkg:pypi/payments-worker@2.0.0",
+      "root": true,
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "type": "application",
+      "version": "2.0.0"
+    },
+    {
+      "aliases": [
+        "pycryptodome"
+      ],
+      "id": "2cbom:comp:pkg:pypi/pycryptodome@3.21.0",
+      "name": "pycryptodome",
+      "purl": "pkg:pypi/pycryptodome@3.21.0",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "type": "library",
+      "version": "3.21.0"
+    }
+  ],
+  "conformance": {
+    "conformant": true,
+    "errors": 0,
+    "infos": 21,
+    "profile": "strict",
+    "warnings": 16
+  },
+  "findings": [
+    {
+      "code": "2CBOM-C02-EVIDENCE-UNLOCATED",
+      "message": "asset is only derived; no occurrence location recorded",
+      "rule": "check.C02b-unlocated",
+      "severity": "warning",
+      "subject": "2cbom:alg:aes-256-gcm"
+    },
+    {
+      "code": "2CBOM-C02-EVIDENCE-UNLOCATED",
+      "message": "asset is only derived; no occurrence location recorded",
+      "rule": "check.C02b-unlocated",
+      "severity": "warning",
+      "subject": "2cbom:alg:chacha20-poly1305"
+    },
+    {
+      "code": "2CBOM-C02-EVIDENCE-UNLOCATED",
+      "message": "asset is only derived; no occurrence location recorded",
+      "rule": "check.C02b-unlocated",
+      "severity": "warning",
+      "subject": "2cbom:alg:ecdh"
+    },
+    {
+      "code": "2CBOM-C02-EVIDENCE-UNLOCATED",
+      "message": "asset is only derived; no occurrence location recorded",
+      "rule": "check.C02b-unlocated",
+      "severity": "warning",
+      "subject": "2cbom:alg:rsa"
+    },
+    {
+      "code": "2CBOM-C02-EVIDENCE-UNLOCATED",
+      "message": "asset is only derived; no occurrence location recorded",
+      "rule": "check.C02b-unlocated",
+      "severity": "warning",
+      "subject": "2cbom:alg:sha2-384"
+    },
+    {
+      "code": "2CBOM-C02-EVIDENCE-UNLOCATED",
+      "message": "asset is only derived; no occurrence location recorded",
+      "rule": "check.C02b-unlocated",
+      "severity": "warning",
+      "subject": "2cbom:alg:tdea-cbc"
+    },
+    {
+      "code": "2CBOM-C02-EVIDENCE-UNLOCATED",
+      "message": "asset is only derived; no occurrence location recorded",
+      "rule": "check.C02b-unlocated",
+      "severity": "warning",
+      "subject": "2cbom:alg:x25519"
+    },
+    {
+      "code": "2CBOM-C10-PARAMETER-SET-MISSING",
+      "message": "missing curve for family 'ecdh'; security level cannot be derived",
+      "rule": "check.C10-parameter-set",
+      "severity": "warning",
+      "subject": "2cbom:alg:ecdh"
+    },
+    {
+      "code": "2CBOM-C10-PARAMETER-SET-MISSING",
+      "message": "missing parameterSet for family 'rsa'; security level cannot be derived",
+      "rule": "check.C10-parameter-set",
+      "severity": "warning",
+      "subject": "2cbom:alg:rsa"
+    },
+    {
+      "code": "2CBOM-C15-WEAK-IDENTITY",
+      "message": "identity derived from location; occurrences from other sources may not merge",
+      "rule": "check.C15-weak-identity",
+      "severity": "warning",
+      "subject": "2cbom:key:private-key:loc:9940fc91b8e14941fd22aabf"
+    },
+    {
+      "code": "2CBOM-C15-WEAK-IDENTITY",
+      "message": "identity derived from location; occurrences from other sources may not merge",
+      "rule": "check.C15-weak-identity",
+      "severity": "warning",
+      "subject": "2cbom:key:private-key:loc:e22a1f2a68d7ffddd2733622"
+    },
+    {
+      "code": "2CBOM-C15-WEAK-IDENTITY",
+      "message": "identity derived from location; occurrences from other sources may not merge",
+      "rule": "check.C15-weak-identity",
+      "severity": "warning",
+      "subject": "2cbom:key:public-key:loc:37fffc6fd0dfba644509ea11"
+    },
+    {
+      "code": "2CBOM-P01-CLASSICALLY-WEAK",
+      "message": "classically weak: replace now (catalogue family 'des': classically-weak; classical strength 56 bits is below the 112-bit floor)",
+      "rule": "check.P01-P02-readiness",
+      "severity": "warning",
+      "subject": "2cbom:alg:des-cbc"
+    },
+    {
+      "code": "2CBOM-P01-CLASSICALLY-WEAK",
+      "message": "classically weak: replace now (catalogue family 'sha1': classically-weak; classical strength 80 bits is below the 112-bit floor)",
+      "rule": "check.P01-P02-readiness",
+      "severity": "warning",
+      "subject": "2cbom:alg:sha1"
+    },
+    {
+      "code": "2CBOM-P01-CLASSICALLY-WEAK",
+      "message": "classically weak: replace now (catalogue family 'tdea': classically-weak; 64-bit block (Sweet32); encryption disallowed by NIST after 2023.)",
+      "rule": "check.P01-P02-readiness",
+      "severity": "warning",
+      "subject": "2cbom:alg:tdea-cbc"
+    },
+    {
+      "code": "2CBOM-P01-CLASSICALLY-WEAK",
+      "message": "classically weak: replace now (suite TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256: quantum-vulnerable; suite TLS_RSA_WITH_3DES_EDE_CBC_SHA: classically-weak)",
+      "rule": "check.P01-P02-readiness",
+      "severity": "warning",
+      "subject": "2cbom:proto:tls-1.2"
+    },
+    {
+      "code": "2CBOM-C14-SOURCE-CONFLICT",
+      "message": "toolPrimitive: sources disagree (src-e5fc2a359bba='block-cipher'); chose 'ae' by precedence",
+      "rule": "check.C13-C14-conflicts",
+      "severity": "info",
+      "subject": "2cbom:alg:aes-128-gcm"
+    },
+    {
+      "code": "2CBOM-C14-SOURCE-CONFLICT",
+      "message": "issuerName: sources disagree (src-6b22f6d672d9='CN=Example Issuing CA, O=Example Corp, C=CA'); chose 'CN=Example Issuing CA,O=Example Corp,C=CA' by precedence",
+      "rule": "check.C13-C14-conflicts",
+      "severity": "info",
+      "subject": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+    },
+    {
+      "code": "2CBOM-C14-SOURCE-CONFLICT",
+      "message": "subjectName: sources disagree (src-6b22f6d672d9='CN=api.payments.example.com, O=Example Corp, C=CA'); chose 'CN=api.payments.example.com,O=Example Corp,C=CA' by precedence",
+      "rule": "check.C13-C14-conflicts",
+      "severity": "info",
+      "subject": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+    },
+    {
+      "code": "2CBOM-C16-PRESTANDARD-NAME",
+      "message": "pre-standard names ['Dilithium3'] mapped to 2cbom:alg:ml-dsa-65",
+      "rule": "check.C16-prestandard",
+      "severity": "info",
+      "subject": "2cbom:alg:ml-dsa-65"
+    },
+    {
+      "code": "2CBOM-C17-SPEC-VERSION-NONSTANDARD",
+      "message": "pre-standard IBM CBOM (specVersion 1.4-cbom-1.0) lifted to the CycloneDX 1.6 model",
+      "rule": "ingest",
+      "severity": "info",
+      "subject": "src-6b22f6d672d9"
+    },
+    {
+      "code": "2CBOM-I01-SUBSUMED",
+      "message": "detection 'forge-1' (AES) from src-e5fc2a359bba absorbed into 2cbom:alg:aes-128-gcm (same location)",
+      "rule": "resolve.subsume-by-location",
+      "severity": "info",
+      "subject": "2cbom:alg:aes-128-gcm"
+    },
+    {
+      "code": "2CBOM-I01-SUBSUMED",
+      "message": "detection 'ibm-rsa' (RSA-2048) from src-6b22f6d672d9 absorbed into 2cbom:alg:rsa-2048-oaep (same location)",
+      "rule": "resolve.subsume-by-location",
+      "severity": "info",
+      "subject": "2cbom:alg:rsa-2048-oaep"
+    },
+    {
+      "code": "2CBOM-I01-SUBSUMED",
+      "message": "detection 'forge-3' (RSA) from src-e5fc2a359bba absorbed into 2cbom:alg:rsa-pkcs1v15-sha2-256 (same location)",
+      "rule": "resolve.subsume-by-location",
+      "severity": "info",
+      "subject": "2cbom:alg:rsa-pkcs1v15-sha2-256"
+    },
+    {
+      "code": "2CBOM-I01-SUBSUMED",
+      "message": "detection 'ibm-cert' (server.crt) from src-6b22f6d672d9 absorbed into 2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4 (same location)",
+      "rule": "resolve.subsume-by-location",
+      "severity": "info",
+      "subject": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: disallowed-after-2035; migration priority high",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:alg:ecdh"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: disallowed-after-2035; migration priority medium",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:alg:ecdsa-p256-sha2-256"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: disallowed-after-2035; migration priority high",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:alg:rsa"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: deprecated-after-2030; migration priority high",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:alg:rsa-2048"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: deprecated-after-2030; migration priority high",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:alg:rsa-2048-oaep"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: deprecated-after-2030; migration priority medium",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:alg:rsa-pkcs1v15-sha2-256"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: disallowed-after-2035; migration priority high",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:alg:x25519"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: deprecated-after-2030; migration priority medium",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: deprecated-after-2030; migration priority high",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:key:private-key:loc:9940fc91b8e14941fd22aabf"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: deprecated-after-2030; migration priority high",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:key:private-key:loc:e22a1f2a68d7ffddd2733622"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: deprecated-after-2030; migration priority high",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:key:public-key:loc:37fffc6fd0dfba644509ea11"
+    },
+    {
+      "code": "2CBOM-P02-QUANTUM-VULNERABLE",
+      "message": "quantum-vulnerable; NIST IR 8547: deprecated-after-2030; migration priority medium",
+      "rule": "check.P01-P02-readiness",
+      "severity": "info",
+      "subject": "2cbom:proto:tls-1.3"
+    }
+  ],
+  "generated": {
+    "generator": {
+      "name": "twocbom",
+      "version": "1.0.0"
+    },
+    "timestamp": "2026-10-29T00:00:00Z"
+  },
+  "integrity": {
+    "algorithm": "sha-256",
+    "canonicalization": "RFC8785",
+    "digest": "sha256:0e0e5f0828454a5b48fb32a1ea9ea5770da024a7cf2d74493fce8d3ab05fdf42",
+    "scope": "all members except integrity, serialNumber and generated.timestamp"
+  },
+  "lineage": {
+    "conflicts": [
+      {
+        "attribute": "toolPrimitive",
+        "candidates": [
+          {
+            "confidence": 1.0,
+            "origin": "src-36d615754603",
+            "strength": 1,
+            "trust": 80,
+            "value": "ae"
+          },
+          {
+            "confidence": 1.0,
+            "origin": "src-e5fc2a359bba",
+            "strength": 0,
+            "trust": 65,
+            "value": "block-cipher"
+          },
+          {
+            "confidence": 1.0,
+            "origin": "src-6b22f6d672d9",
+            "strength": 0,
+            "trust": 60,
+            "value": "ae"
+          }
+        ],
+        "chosen": "ae",
+        "rule": "settle.tool-precedence",
+        "subject": "2cbom:alg:aes-128-gcm"
+      },
+      {
+        "attribute": "issuerName",
+        "candidates": [
+          {
+            "confidence": 1.0,
+            "origin": "src-e275c2b5f4f5",
+            "strength": 1,
+            "trust": 75,
+            "value": "CN=Example Issuing CA,O=Example Corp,C=CA"
+          },
+          {
+            "confidence": 1.0,
+            "origin": "src-6b22f6d672d9",
+            "strength": 0,
+            "trust": 60,
+            "value": "CN=Example Issuing CA, O=Example Corp, C=CA"
+          }
+        ],
+        "chosen": "CN=Example Issuing CA,O=Example Corp,C=CA",
+        "rule": "settle.tool-precedence",
+        "subject": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+      },
+      {
+        "attribute": "subjectName",
+        "candidates": [
+          {
+            "confidence": 1.0,
+            "origin": "src-e275c2b5f4f5",
+            "strength": 1,
+            "trust": 75,
+            "value": "CN=api.payments.example.com,O=Example Corp,C=CA"
+          },
+          {
+            "confidence": 1.0,
+            "origin": "src-6b22f6d672d9",
+            "strength": 0,
+            "trust": 60,
+            "value": "CN=api.payments.example.com, O=Example Corp, C=CA"
+          }
+        ],
+        "chosen": "CN=api.payments.example.com,O=Example Corp,C=CA",
+        "rule": "settle.tool-precedence",
+        "subject": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+      }
+    ],
+    "knowledgeBase": {
+      "version": "2026.10.1"
+    },
+    "ruleset": {
+      "firedRules": {
+        "assess.algorithm": 21,
+        "assess.certificate": 1,
+        "assess.material": 3,
+        "assess.protocol": 2,
+        "check.C02b-unlocated": 7,
+        "check.C10-parameter-set": 2,
+        "check.C12-certificate-validity": 1,
+        "check.C13-C14-conflicts": 3,
+        "check.C15-weak-identity": 3,
+        "check.C16-prestandard": 1,
+        "check.P01-P02-readiness": 16,
+        "closure.certificate-signature": 2,
+        "closure.certificate-subject-key": 2,
+        "closure.constituents": 1,
+        "closure.material-algorithm": 3,
+        "closure.protocol-crypto-refs": 1,
+        "closure.protocol-suites": 3,
+        "enrich.catalogue": 21,
+        "enrich.hybrid-levels": 1,
+        "normalize.algorithm": 21,
+        "normalize.certificate": 2,
+        "normalize.component": 9,
+        "normalize.material": 3,
+        "normalize.protocol": 4,
+        "resolve.attributes": 30,
+        "resolve.component-attributes": 9,
+        "resolve.evidence": 32,
+        "resolve.materialize": 39,
+        "resolve.relations": 43,
+        "resolve.subsume-by-location": 4,
+        "resolve.subsume-certificate-by-dn": 1,
+        "settle.resolve-attribute": 341
+      },
+      "version": "1.0"
+    },
+    "sources": [
+      {
+        "assetCount": 7,
+        "componentCount": 3,
+        "detectionMethod": "static-source",
+        "digest": "sha256:2362e304470a0b1e79c252a6679746cddc005a5c8be030fdf53b4fb32695ee5c",
+        "format": "cyclonedx-json",
+        "id": "src-2362e304470a",
+        "path": "examples/cdxgen-python-cdx16.json",
+        "specVersion": "1.6",
+        "tool": {
+          "name": "cdxgen",
+          "version": "11.4.0"
+        },
+        "trust": 70
+      },
+      {
+        "assetCount": 6,
+        "componentCount": 2,
+        "detectionMethod": "static-source",
+        "digest": "sha256:36d615754603c6102da7981b3a9a2d7c5f94f4f2c140b4a53ae9a76b8c7bf450",
+        "format": "cyclonedx-json",
+        "id": "src-36d615754603",
+        "path": "examples/cbomkit-java-cdx16.json",
+        "specVersion": "1.6",
+        "tool": {
+          "name": "cbomkit",
+          "version": "2.1.0"
+        },
+        "trust": 80
+      },
+      {
+        "assetCount": 5,
+        "componentCount": 1,
+        "detectionMethod": "static-source",
+        "digest": "sha256:6b22f6d672d965dcf72bde150aebfaeed0db43fc52ae8e05b9596a5905a2611d",
+        "format": "ibm-cbom-json",
+        "id": "src-6b22f6d672d9",
+        "path": "examples/ibm-prestandard-cbom14.json",
+        "specVersion": "1.4-cbom-1.0",
+        "tool": {
+          "name": "ibm-cbom",
+          "version": "0.9.3"
+        },
+        "trust": 60
+      },
+      {
+        "assetCount": 8,
+        "componentCount": 2,
+        "detectionMethod": "static-binary",
+        "digest": "sha256:e275c2b5f4f5fca725e4a58bbf8a819f27bc21608f32a7995774ffa9576ada2f",
+        "format": "cyclonedx-json",
+        "id": "src-e275c2b5f4f5",
+        "path": "examples/pqc-scanner-cdx17.json",
+        "specVersion": "1.7",
+        "tool": {
+          "name": "cbomkit-theia",
+          "version": "1.3.0"
+        },
+        "trust": 75
+      },
+      {
+        "assetCount": 4,
+        "componentCount": 1,
+        "detectionMethod": "static-source",
+        "digest": "sha256:e5fc2a359bba31f490f377c1b7e47053aa21e12a9522e976336ff750b9360b41",
+        "format": "cyclonedx-json",
+        "id": "src-e5fc2a359bba",
+        "path": "examples/cryptobom-forge-cdx16.json",
+        "specVersion": "1.6",
+        "tool": {
+          "name": "cryptobom-forge",
+          "version": "1.2.0"
+        },
+        "trust": 65
+      }
+    ]
+  },
+  "profile": "strict",
+  "relations": [
+    {
+      "from": "2cbom:alg:rsa-2048-oaep",
+      "kind": "uses",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "to": "2cbom:alg:sha2-256"
+    },
+    {
+      "from": "2cbom:alg:rsa-pkcs1v15-sha2-256",
+      "kind": "uses",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "to": "2cbom:alg:sha2-256"
+    },
+    {
+      "from": "2cbom:alg:x25519+ml-kem-768",
+      "kind": "component-of",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:ml-kem-768"
+    },
+    {
+      "from": "2cbom:alg:x25519+ml-kem-768",
+      "kind": "uses",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:ml-kem-768"
+    },
+    {
+      "from": "2cbom:alg:x25519+ml-kem-768",
+      "kind": "component-of",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:x25519"
+    },
+    {
+      "from": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      "kind": "subject-key-algorithm",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:rsa"
+    },
+    {
+      "from": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      "kind": "signed-by",
+      "sources": [
+        "src-6b22f6d672d9",
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:rsa-pkcs1v15-sha2-256"
+    },
+    {
+      "from": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+      "kind": "subject-key-algorithm",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:key:public-key:loc:37fffc6fd0dfba644509ea11"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-36d615754603",
+        "src-6b22f6d672d9",
+        "src-e5fc2a359bba"
+      ],
+      "to": "2cbom:alg:aes-128-gcm"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-e5fc2a359bba"
+      ],
+      "to": "2cbom:alg:des-cbc"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "to": "2cbom:alg:hmac-sha2-256"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-36d615754603",
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:rsa-2048-oaep"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-36d615754603",
+        "src-e5fc2a359bba"
+      ],
+      "to": "2cbom:alg:rsa-pkcs1v15-sha2-256"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-e5fc2a359bba"
+      ],
+      "to": "2cbom:alg:sha1"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "to": "2cbom:alg:sha2-256"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "depends-on",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "to": "2cbom:comp:pkg:maven/org.bouncycastle/bcprov-jdk18on@1.78"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:key:private-key:loc:9940fc91b8e14941fd22aabf"
+    },
+    {
+      "from": "2cbom:comp:payments-service@3.4.1",
+      "kind": "uses",
+      "sources": [
+        "src-36d615754603",
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:proto:tls-1.2"
+    },
+    {
+      "from": "2cbom:comp:pkg:generic/openssl@3.5.0",
+      "kind": "provides",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:ml-kem-768"
+    },
+    {
+      "from": "2cbom:comp:pkg:generic/openssl@3.5.0",
+      "kind": "provides",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:x25519+ml-kem-768"
+    },
+    {
+      "from": "2cbom:comp:pkg:generic/openssl@3.5.0",
+      "kind": "provides",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:proto:tls-1.3"
+    },
+    {
+      "from": "2cbom:comp:pkg:maven/org.bouncycastle/bcprov-jdk18on@1.78",
+      "kind": "provides",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "to": "2cbom:alg:aes-128-gcm"
+    },
+    {
+      "from": "2cbom:comp:pkg:maven/org.bouncycastle/bcprov-jdk18on@1.78",
+      "kind": "provides",
+      "sources": [
+        "src-36d615754603"
+      ],
+      "to": "2cbom:alg:rsa-2048-oaep"
+    },
+    {
+      "from": "2cbom:comp:pkg:oci/payments-service@sha256%3A2b6c",
+      "kind": "uses",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:ml-dsa-65"
+    },
+    {
+      "from": "2cbom:comp:pkg:oci/payments-service@sha256%3A2b6c",
+      "kind": "uses",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+    },
+    {
+      "from": "2cbom:comp:pkg:oci/payments-service@sha256%3A2b6c",
+      "kind": "depends-on",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:comp:pkg:generic/openssl@3.5.0"
+    },
+    {
+      "from": "2cbom:comp:pkg:oci/payments-service@sha256%3A2b6c",
+      "kind": "uses",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:proto:tls-1.3"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/cryptography@43.0.1",
+      "kind": "provides",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:aes-256-cbc-pkcs7"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/cryptography@43.0.1",
+      "kind": "provides",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:ecdsa-p256-sha2-256"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/cryptography@43.0.1",
+      "kind": "provides",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:pbkdf2-sha2-256"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/cryptography@43.0.1",
+      "kind": "provides",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:rsa-2048"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "uses",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:aes-256-cbc-pkcs7"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "uses",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:ecdsa-p256-sha2-256"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "uses",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:pbkdf2-sha2-256"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "uses",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:rsa-2048"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "uses",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:sha2-256"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "depends-on",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:comp:pkg:pypi/cryptography@43.0.1"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "depends-on",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:comp:pkg:pypi/pycryptodome@3.21.0"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "uses",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:key:private-key:loc:e22a1f2a68d7ffddd2733622"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/payments-worker@2.0.0",
+      "kind": "uses",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:proto:tls-1.3"
+    },
+    {
+      "from": "2cbom:comp:pkg:pypi/pycryptodome@3.21.0",
+      "kind": "provides",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:sha2-256"
+    },
+    {
+      "from": "2cbom:key:private-key:loc:9940fc91b8e14941fd22aabf",
+      "kind": "instantiates",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:rsa-2048"
+    },
+    {
+      "from": "2cbom:key:private-key:loc:e22a1f2a68d7ffddd2733622",
+      "kind": "instantiates",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:rsa-2048"
+    },
+    {
+      "from": "2cbom:key:public-key:loc:37fffc6fd0dfba644509ea11",
+      "kind": "instantiates",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:rsa-2048"
+    },
+    {
+      "from": "2cbom:proto:tls-1.2",
+      "kind": "negotiates",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:aes-128-gcm",
+      "via": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+    },
+    {
+      "from": "2cbom:proto:tls-1.2",
+      "kind": "negotiates",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:ecdh",
+      "via": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+    },
+    {
+      "from": "2cbom:proto:tls-1.2",
+      "kind": "negotiates",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:rsa",
+      "via": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+    },
+    {
+      "from": "2cbom:proto:tls-1.2",
+      "kind": "negotiates",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:rsa",
+      "via": "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+    },
+    {
+      "from": "2cbom:proto:tls-1.2",
+      "kind": "negotiates",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:sha1",
+      "via": "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+    },
+    {
+      "from": "2cbom:proto:tls-1.2",
+      "kind": "negotiates",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:sha2-256",
+      "via": "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+    },
+    {
+      "from": "2cbom:proto:tls-1.2",
+      "kind": "negotiates",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:alg:tdea-cbc",
+      "via": "TLS_RSA_WITH_3DES_EDE_CBC_SHA"
+    },
+    {
+      "from": "2cbom:proto:tls-1.2",
+      "kind": "uses",
+      "sources": [
+        "src-6b22f6d672d9"
+      ],
+      "to": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+    },
+    {
+      "from": "2cbom:proto:tls-1.3",
+      "kind": "negotiates",
+      "sources": [
+        "src-2362e304470a",
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:aes-256-gcm",
+      "via": "TLS_AES_256_GCM_SHA384"
+    },
+    {
+      "from": "2cbom:proto:tls-1.3",
+      "kind": "negotiates",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:chacha20-poly1305",
+      "via": "TLS_CHACHA20_POLY1305_SHA256"
+    },
+    {
+      "from": "2cbom:proto:tls-1.3",
+      "kind": "negotiates",
+      "sources": [
+        "src-2362e304470a"
+      ],
+      "to": "2cbom:alg:sha2-256",
+      "via": "TLS_CHACHA20_POLY1305_SHA256"
+    },
+    {
+      "from": "2cbom:proto:tls-1.3",
+      "kind": "negotiates",
+      "sources": [
+        "src-2362e304470a",
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:sha2-384",
+      "via": "TLS_AES_256_GCM_SHA384"
+    },
+    {
+      "from": "2cbom:proto:tls-1.3",
+      "kind": "uses",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:alg:x25519+ml-kem-768"
+    },
+    {
+      "from": "2cbom:proto:tls-1.3",
+      "kind": "uses",
+      "sources": [
+        "src-e275c2b5f4f5"
+      ],
+      "to": "2cbom:cert:fp:sha256:8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4"
+    }
+  ],
+  "serialNumber": "urn:uuid:93964e46-d4b1-5ee8-a7b4-c4a6034a2e98",
+  "summary": {
+    "assetCount": 27,
+    "assetsByMigrationPriority": {
+      "high": 8,
+      "immediate": 4,
+      "low": 8,
+      "medium": 4,
+      "none": 3
+    },
+    "assetsByQuantumClass": {
+      "classically-weak": 4,
+      "quantum-safe": 11,
+      "quantum-vulnerable": 12
+    },
+    "componentCount": 7,
+    "relationCount": 59
+  }
+}
