@@ -1,17 +1,11 @@
-# twocbom — Canonical Cryptography Bill of Materials (2CBOM)
+# twocbom 
 
-`twocbom` is the reference implementation of the **2CBOM** model (see
-`spec/2cbom-standard.tex`) and a **rule-based expert system** that merges the
-CBOMs produced by heterogeneous generators — CycloneDX 1.5/1.6/1.7 documents
-from CBOMkit, cdxgen, cryptobom-forge, cbomkit-theia, … and pre-standard IBM
-`1.4-cbom-1.0` documents — into one canonical, deterministic, conformance-checked
-2CBOM document suitable for post-quantum-cryptography (PQC) compliance work.
+## Overview
+`twocbom` is the reference implementation of the 2CBOM model. It comes with a a rule-based expert system that merges the CBOMs produced by various CBOB generators. It takes CycloneDX 1.5/1.6/1.7 documents as well as pre-standard IBM 1.4-cbom-1.0 documents and merges them into one canonical, deterministic, conformance-checked 2CBOM document suitable for post-quantum-cryptography (PQC) compliance work.
 
-Pure Python 3.10+, no runtime dependencies (`jsonschema` is optional).
-
-```
+```bash
 pip install -e ".[dev]"
-python -m pytest -q                      # 124 tests
+python -m pytest -q 
 twocbom merge examples/*.json -o merged.2cbom.json --cyclonedx merged.cdx.json --report report.md --trace trace.json
 twocbom validate merged.2cbom.json
 twocbom explain trace.json 2cbom:alg:x25519+ml-kem-768
@@ -22,27 +16,25 @@ twocbom schema > twocbom-1.0.schema.json
 ```
 
 ## What problem it solves
+CBOM generators disagree on:
+- Names:`AES128-GCM`, `AES/GCM/NoPadding`, `aes-128-gcm`, `2.16.840.1.101.3.4.1.6`. 
+- Structure: CycloneDX 1.6's `cryptographic-asset`, `evidence.occurrences`, and kebab-case vs. IBM's `crypto-asset`, `detectionContext`, and camelCase enumerations.
+- Completeness: one tool sees the key size, another the mode, a third only AES.
+- Assessment: security levels copied from different tables. 
 
-CBOM generators disagree on *names* (`AES128-GCM`, `AES/GCM/NoPadding`,
-`aes-128-gcm`, `2.16.840.1.101.3.4.1.6`), on *structure* (CycloneDX 1.6
-`cryptographic-asset` vs. IBM `crypto-asset`, `evidence.occurrences` vs.
-`detectionContext`, kebab-case vs. camelCase enumerations), on *completeness*
-(one tool sees the key size, another the mode, a third only "AES"), and on
-*assessment* (security levels copied from different tables). A compliance
-inventory built on such inputs is neither reproducible nor auditable.
-
-2CBOM fixes this with three ideas, all formalised in the specification:
+A compliance inventory built on such inconsistent inputs is neither reproducible nor auditable. 2CBOM fixes this with three ideas, all formalized in 2CBOM's specification:
 
 1. **Canonical identity.** A deterministic naming grammar maps every spelling
    of an algorithm to one identifier (`2cbom:alg:rsa-pkcs1v15-sha2-256`);
    certificates, keys, protocols and software components get content-derived
-   identifiers as well. Pre-standard names (Kyber, Dilithium, Falcon, SPHINCS+)
-   are mapped to their FIPS names and recorded as aliases.
+   identifiers as well. Pre-standard names (Kyber, Dilithium, Falcon, SPHINCS+) are mapped to their FIPS names and recorded as aliases.
+
 2. **Strict closure and assessment.** Every certificate links to its signature
    and key algorithms, every key to its algorithm, every protocol to the
    constituents of its cipher suites; every asset receives a determinate
    quantum class, NIST IR 8547 status, CNSA 2.0 and FIPS status and a
-   migration priority. *Unknown is never upgraded to safe.*
+   migration priority. Unknown is never upgraded to safe.
+
 3. **Order-free merge with provenance.** Inputs are turned into a set of
    provenance-tagged assertions; a monotonic forward-chaining rule engine
    computes the unique fixpoint; attributes are resolved by a total order
@@ -51,7 +43,6 @@ inventory built on such inputs is neither reproducible nor auditable.
    SHA-256 digest, UUIDv5 serial number) and every conflict is recorded.
 
 ## Architecture
-
 ```
 inputs ──► ingest/            syntactic lifting to a format-agnostic IR
             cyclonedx.py       CycloneDX 1.5 / 1.6 / 1.7
