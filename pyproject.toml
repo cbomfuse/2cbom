@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "twocbom"
+version = "1.0.0"
+description = "2CBOM: Canonical Cryptography Bill of Materials model and rule-based expert system for merging heterogeneous CBOMs"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Amin Jafarpour" }]
+dependencies = []
+
+[project.optional-dependencies]
+validate = ["jsonschema>=4.0"]
+dev = ["pytest>=7", "jsonschema>=4.0"]
+
+[project.scripts]
+twocbom = "twocbom.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["twocbom*"]
+
+[tool.setuptools.package-data]
+twocbom = ["knowledge/*.json", "schema/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

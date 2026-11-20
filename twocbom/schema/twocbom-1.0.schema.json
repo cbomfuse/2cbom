@@ -1,0 +1,981 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://2cbom.org/schema/2cbom-1.0.schema.json",
+  "title": "Canonical Cryptography Bill of Materials (2CBOM) 1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "2cbomVersion",
+    "profile",
+    "serialNumber",
+    "integrity",
+    "lineage",
+    "components",
+    "assets",
+    "relations",
+    "findings",
+    "conformance",
+    "summary"
+  ],
+  "properties": {
+    "2cbomVersion": {
+      "const": "1.0"
+    },
+    "profile": {
+      "type": "string",
+      "enum": [
+        "core",
+        "strict"
+      ]
+    },
+    "serialNumber": {
+      "type": "string",
+      "pattern": "^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "generated": {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "string"
+        },
+        "generator": {
+          "type": "object"
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "canonicalization",
+        "digest"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha-256"
+        },
+        "canonicalization": {
+          "const": "RFC8785"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "scope": {
+          "type": "string"
+        }
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "required": [
+        "sources",
+        "ruleset",
+        "knowledgeBase"
+      ],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "digest",
+              "format",
+              "specVersion",
+              "tool",
+              "trust",
+              "detectionMethod"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^src-[0-9a-f]{12}$"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "cyclonedx-json",
+                  "ibm-cbom-json",
+                  "cyclonedx-prestandard-json",
+                  "unknown"
+                ]
+              },
+              "specVersion": {
+                "type": "string"
+              },
+              "tool": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  }
+                }
+              },
+              "trust": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "detectionMethod": {
+                "type": "string",
+                "enum": [
+                  "static-source",
+                  "static-binary",
+                  "dynamic",
+                  "network",
+                  "configuration",
+                  "manual",
+                  "declared",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "path": {
+                "type": "string"
+              },
+              "assetCount": {
+                "type": "integer"
+              },
+              "componentCount": {
+                "type": "integer"
+              },
+              "notes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "ruleset": {
+          "type": "object"
+        },
+        "knowledgeBase": {
+          "type": "object"
+        },
+        "conflicts": {
+          "type": "array"
+        }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "type",
+          "name",
+          "sources"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "application",
+              "framework",
+              "library",
+              "container",
+              "platform",
+              "operating-system",
+              "device",
+              "device-driver",
+              "firmware",
+              "file",
+              "machine-learning-model",
+              "data",
+              "service",
+              "unknown"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "purl": {
+            "type": "string"
+          },
+          "cpe": {
+            "type": "string"
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "root": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "type",
+          "name",
+          "evidence",
+          "sources"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "algorithm",
+              "certificate",
+              "related-crypto-material",
+              "protocol"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "algorithm": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "primitive"
+            ],
+            "properties": {
+              "family": {
+                "type": "string"
+              },
+              "primitive": {
+                "type": "string",
+                "enum": [
+                  "drbg",
+                  "mac",
+                  "block-cipher",
+                  "stream-cipher",
+                  "signature",
+                  "hash",
+                  "pke",
+                  "xof",
+                  "kdf",
+                  "key-agree",
+                  "kem",
+                  "ae",
+                  "combiner",
+                  "other",
+                  "unknown"
+                ]
+              },
+              "parameterSet": {
+                "type": "string"
+              },
+              "curve": {
+                "type": "string"
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "cbc",
+                  "ecb",
+                  "ccm",
+                  "gcm",
+                  "cfb",
+                  "ofb",
+                  "ctr",
+                  "xts",
+                  "siv",
+                  "gcm-siv",
+                  "ocb",
+                  "eax",
+                  "cts",
+                  "kw",
+                  "kwp",
+                  "other",
+                  "unknown"
+                ]
+              },
+              "padding": {
+                "type": "string",
+                "enum": [
+                  "pkcs5",
+                  "pkcs7",
+                  "pkcs1v15",
+                  "oaep",
+                  "pss",
+                  "raw",
+                  "none",
+                  "zero",
+                  "iso10126",
+                  "iso7816",
+                  "x923",
+                  "other",
+                  "unknown"
+                ]
+              },
+              "hash": {
+                "type": "string"
+              },
+              "components": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+                }
+              },
+              "cryptoFunctions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "generate",
+                    "keygen",
+                    "encrypt",
+                    "decrypt",
+                    "digest",
+                    "tag",
+                    "keyderive",
+                    "sign",
+                    "verify",
+                    "encapsulate",
+                    "decapsulate",
+                    "other",
+                    "unknown"
+                  ]
+                }
+              },
+              "classicalSecurityLevel": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "nistQuantumSecurityLevel": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "oid": {
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d+)+$"
+              },
+              "standards": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "executionEnvironment": {
+                "type": "string",
+                "enum": [
+                  "software-plain-ram",
+                  "software-encrypted-ram",
+                  "software-tee",
+                  "hardware",
+                  "other",
+                  "unknown"
+                ]
+              },
+              "implementationPlatform": {
+                "type": "string"
+              },
+              "certificationLevel": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "fips140-1-l1",
+                    "fips140-1-l2",
+                    "fips140-1-l3",
+                    "fips140-1-l4",
+                    "fips140-2-l1",
+                    "fips140-2-l2",
+                    "fips140-2-l3",
+                    "fips140-2-l4",
+                    "fips140-3-l1",
+                    "fips140-3-l2",
+                    "fips140-3-l3",
+                    "fips140-3-l4",
+                    "cc-eal1",
+                    "cc-eal1+",
+                    "cc-eal2",
+                    "cc-eal2+",
+                    "cc-eal3",
+                    "cc-eal3+",
+                    "cc-eal4",
+                    "cc-eal4+",
+                    "cc-eal5",
+                    "cc-eal5+",
+                    "cc-eal6",
+                    "cc-eal6+",
+                    "cc-eal7",
+                    "cc-eal7+",
+                    "other",
+                    "unknown"
+                  ]
+                }
+              },
+              "preStandardNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "stateful": {
+                "type": "boolean"
+              },
+              "toolPrimitive": {
+                "type": "string"
+              },
+              "toolProperties": {
+                "type": "object"
+              },
+              "notes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "certificate": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "subject": {
+                "type": "string"
+              },
+              "issuer": {
+                "type": "string"
+              },
+              "serialNumber": {
+                "type": "string"
+              },
+              "notBefore": {
+                "type": "string"
+              },
+              "notAfter": {
+                "type": "string"
+              },
+              "format": {
+                "type": "string"
+              },
+              "extension": {
+                "type": "string"
+              },
+              "fingerprint": {
+                "type": "string"
+              },
+              "signatureAlgorithm": {
+                "type": "string",
+                "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+              },
+              "subjectPublicKeyAlgorithm": {
+                "type": "string",
+                "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+              },
+              "identityBasis": {
+                "type": "string",
+                "enum": [
+                  "fingerprint",
+                  "distinguished-name",
+                  "location",
+                  "unresolved"
+                ]
+              },
+              "toolProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "material": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "private-key",
+                  "public-key",
+                  "secret-key",
+                  "key",
+                  "ciphertext",
+                  "signature",
+                  "digest",
+                  "initialization-vector",
+                  "nonce",
+                  "seed",
+                  "salt",
+                  "shared-secret",
+                  "tag",
+                  "additional-data",
+                  "password",
+                  "credential",
+                  "token",
+                  "other",
+                  "unknown"
+                ]
+              },
+              "identifier": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "pre-activation",
+                  "active",
+                  "suspended",
+                  "deactivated",
+                  "compromised",
+                  "destroyed"
+                ]
+              },
+              "size": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "format": {
+                "type": "string"
+              },
+              "algorithm": {
+                "type": "string",
+                "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+              },
+              "algorithms": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+                }
+              },
+              "creationDate": {
+                "type": "string"
+              },
+              "activationDate": {
+                "type": "string"
+              },
+              "updateDate": {
+                "type": "string"
+              },
+              "expirationDate": {
+                "type": "string"
+              },
+              "securedBy": {
+                "type": "object",
+                "properties": {
+                  "mechanism": {
+                    "type": "string"
+                  },
+                  "algorithm": {
+                    "type": "string",
+                    "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+                  }
+                }
+              },
+              "fingerprint": {
+                "type": "string"
+              },
+              "identityBasis": {
+                "type": "string",
+                "enum": [
+                  "fingerprint",
+                  "identifier",
+                  "location",
+                  "source-local"
+                ]
+              },
+              "toolProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "protocol": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "tls",
+                  "ssh",
+                  "ipsec",
+                  "ike",
+                  "sstp",
+                  "wpa",
+                  "other",
+                  "unknown"
+                ]
+              },
+              "version": {
+                "type": "string"
+              },
+              "cipherSuites": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "identifier": {
+                      "type": "string"
+                    },
+                    "algorithms": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+                      }
+                    },
+                    "keyExchangeKnown": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "references": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+                }
+              },
+              "toolProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "assessment": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "quantumClass",
+              "nistIr8547",
+              "migrationPriority"
+            ],
+            "properties": {
+              "quantumClass": {
+                "type": "string",
+                "enum": [
+                  "quantum-safe",
+                  "quantum-vulnerable",
+                  "classically-weak",
+                  "unknown"
+                ]
+              },
+              "nistQuantumSecurityLevel": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "classicalSecurityLevel": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "nistIr8547": {
+                "type": "string",
+                "enum": [
+                  "acceptable",
+                  "deprecated-after-2030",
+                  "disallowed-after-2035",
+                  "disallowed",
+                  "unknown"
+                ]
+              },
+              "cnsa2": {
+                "type": "boolean"
+              },
+              "fipsApproved": {
+                "type": "boolean"
+              },
+              "migrationPriority": {
+                "type": "string",
+                "enum": [
+                  "immediate",
+                  "high",
+                  "medium",
+                  "low",
+                  "none",
+                  "unknown"
+                ]
+              },
+              "rationale": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source",
+                "tool",
+                "method",
+                "confidence"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "pattern": "^src-[0-9a-f]{12}$"
+                },
+                "tool": {
+                  "type": "string"
+                },
+                "method": {
+                  "type": "string",
+                  "enum": [
+                    "static-source",
+                    "static-binary",
+                    "dynamic",
+                    "network",
+                    "configuration",
+                    "manual",
+                    "declared",
+                    "derived",
+                    "unknown"
+                  ]
+                },
+                "location": {
+                  "type": "string"
+                },
+                "line": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "symbol": {
+                  "type": "string"
+                },
+                "context": {
+                  "type": "string"
+                },
+                "confidence": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            }
+          },
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "unresolved": {
+            "type": "boolean"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "algorithm"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "algorithm"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "certificate"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "certificate"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "related-crypto-material"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "material"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "protocol"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "protocol"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from",
+          "to",
+          "kind"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+          },
+          "to": {
+            "type": "string",
+            "pattern": "^2cbom:(alg|cert|key|proto|comp):.+$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "uses",
+              "implements",
+              "provides",
+              "negotiates",
+              "signed-by",
+              "subject-key-algorithm",
+              "instantiates",
+              "secured-by",
+              "depends-on",
+              "component-of"
+            ]
+          },
+          "via": {
+            "type": "string"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "severity",
+          "subject",
+          "message",
+          "rule"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^2CBOM-[A-Z]\\d{2}[A-Za-z]?-[A-Z0-9-]+$"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "rule": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "conformance": {
+      "type": "object",
+      "required": [
+        "profile",
+        "conformant",
+        "errors",
+        "warnings",
+        "infos"
+      ]
+    },
+    "summary": {
+      "type": "object"
+    }
+  }
+}

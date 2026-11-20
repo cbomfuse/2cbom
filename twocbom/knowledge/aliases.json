@@ -1,0 +1,534 @@
+{
+  "$comment": "Lexicon for the canonical naming grammar (Section 4 of the specification). Names are lower-cased and stripped of separators ([-_/ ,.+()]) before a greedy longest-match segmentation over these atoms. 'fullNames' are matched first against the whole normalised string.",
+  "version": "2026.10.1",
+  "fullNames": {
+    "x25519mlkem768": {
+      "family": "x25519+ml-kem-768"
+    },
+    "secp256r1mlkem768": {
+      "family": "ecdh-p256+ml-kem-768"
+    },
+    "secp384r1mlkem1024": {
+      "family": "ecdh-p384+ml-kem-1024"
+    },
+    "x25519kyber768draft00": {
+      "family": "x25519+ml-kem-768",
+      "preStandard": "X25519Kyber768Draft00"
+    },
+    "x25519kyber768d00": {
+      "family": "x25519+ml-kem-768",
+      "preStandard": "X25519Kyber768Draft00"
+    },
+    "x25519kyber512draft00": {
+      "family": "x25519+ml-kem-512",
+      "preStandard": "X25519Kyber512Draft00"
+    },
+    "sha512256": {
+      "family": "sha2",
+      "parameterSet": "512-256"
+    },
+    "sha2512256": {
+      "family": "sha2",
+      "parameterSet": "512-256"
+    },
+    "sha512224": {
+      "family": "sha2",
+      "parameterSet": "512-224"
+    },
+    "sha2512224": {
+      "family": "sha2",
+      "parameterSet": "512-224"
+    },
+    "securerandom": {
+      "family": "drbg"
+    },
+    "javasecuritysecurerandom": {
+      "family": "drbg"
+    },
+    "sha1prng": {
+      "family": "drbg",
+      "hash": "sha1"
+    },
+    "nativeprng": {
+      "family": "drbg"
+    },
+    "drbg": {
+      "family": "drbg"
+    },
+    "rsaencryption": {
+      "family": "rsa"
+    },
+    "idrsaencryption": {
+      "family": "rsa"
+    },
+    "rsassapss": {
+      "family": "rsa",
+      "padding": "pss"
+    },
+    "idrsassapss": {
+      "family": "rsa",
+      "padding": "pss"
+    },
+    "rsaesoaep": {
+      "family": "rsa",
+      "padding": "oaep"
+    },
+    "idrsaesoaep": {
+      "family": "rsa",
+      "padding": "oaep"
+    },
+    "ecpublickey": {
+      "family": "ec"
+    },
+    "idecpublickey": {
+      "family": "ec"
+    },
+    "ec": {
+      "family": "ec"
+    },
+    "ecc": {
+      "family": "ec"
+    },
+    "ecdhe": {
+      "family": "ecdh"
+    },
+    "dhe": {
+      "family": "dh"
+    },
+    "diffiehellman": {
+      "family": "dh"
+    },
+    "desede": {
+      "family": "tdea"
+    },
+    "desede3": {
+      "family": "tdea"
+    },
+    "tripledes": {
+      "family": "tdea"
+    },
+    "3des": {
+      "family": "tdea"
+    },
+    "des3": {
+      "family": "tdea"
+    },
+    "aesgcmsiv": {
+      "family": "aes",
+      "mode": "gcm-siv"
+    },
+    "aeskw": {
+      "family": "aes",
+      "mode": "kw"
+    },
+    "aeskwp": {
+      "family": "aes",
+      "mode": "kwp"
+    },
+    "aeswrap": {
+      "family": "aes",
+      "mode": "kw"
+    },
+    "chachapoly": {
+      "family": "chacha20-poly1305"
+    },
+    "chacha20poly1305": {
+      "family": "chacha20-poly1305"
+    },
+    "xchacha20poly1305": {
+      "family": "xchacha20-poly1305"
+    },
+    "ctrdrbg": {
+      "family": "ctr-drbg"
+    },
+    "aesctrdrbg": {
+      "family": "ctr-drbg"
+    },
+    "hmacdrbg": {
+      "family": "hmac-drbg"
+    },
+    "hashdrbg": {
+      "family": "hash-drbg"
+    },
+    "sphincsplus": {
+      "family": "slh-dsa"
+    },
+    "sphincs": {
+      "family": "slh-dsa"
+    },
+    "kyber": {
+      "family": "ml-kem",
+      "preStandard": "Kyber"
+    },
+    "dilithium": {
+      "family": "ml-dsa",
+      "preStandard": "Dilithium"
+    },
+    "falcon": {
+      "family": "fn-dsa",
+      "preStandard": "Falcon"
+    }
+  },
+  "atoms": {
+    "family": {
+      "aes": "aes",
+      "rijndael": "aes",
+      "camellia": "camellia",
+      "aria": "aria",
+      "sm4": "sm4",
+      "seed": "seed",
+      "twofish": "twofish",
+      "serpent": "serpent",
+      "cast5": "cast5",
+      "cast128": "cast5",
+      "idea": "idea",
+      "3des": "tdea",
+      "des3": "tdea",
+      "tdea": "tdea",
+      "tdes": "tdea",
+      "desede": "tdea",
+      "desede3": "tdea",
+      "tripledes": "tdea",
+      "des": "des",
+      "blowfish": "blowfish",
+      "rc2": "rc2",
+      "rc4": "rc4",
+      "arcfour": "rc4",
+      "chacha20": "chacha20",
+      "chacha": "chacha20",
+      "xchacha20": "xchacha20",
+      "salsa20": "salsa20",
+      "poly1305": "poly1305",
+      "rsa": "rsa",
+      "rsassa": "rsa",
+      "rsaes": "rsa",
+      "dsa": "dsa",
+      "dh": "dh",
+      "dhe": "dh",
+      "ecdh": "ecdh",
+      "ecdhe": "ecdh",
+      "ecdsa": "ecdsa",
+      "ec": "ec",
+      "ecc": "ec",
+      "eddsa": "eddsa",
+      "ed25519": "ed25519",
+      "ed25519ph": "ed25519",
+      "ed448": "ed448",
+      "ed448ph": "ed448",
+      "x25519": "x25519",
+      "x448": "x448",
+      "ecies": "ecies",
+      "sm2": "sm2",
+      "elgamal": "elgamal",
+      "psk": "psk",
+      "mlkem": "ml-kem",
+      "kyber": "ml-kem",
+      "mldsa": "ml-dsa",
+      "dilithium": "ml-dsa",
+      "slhdsa": "slh-dsa",
+      "sphincs": "slh-dsa",
+      "sphincsplus": "slh-dsa",
+      "fndsa": "fn-dsa",
+      "falcon": "fn-dsa",
+      "hqc": "hqc",
+      "frodokem": "frodokem",
+      "frodo": "frodokem",
+      "bike": "bike",
+      "classicmceliece": "classic-mceliece",
+      "mceliece": "classic-mceliece",
+      "ntru": "ntru",
+      "ntruprime": "ntru-prime",
+      "sntrup761": "ntru-prime",
+      "lms": "lms",
+      "hss": "hss",
+      "xmss": "xmss",
+      "xmssmt": "xmss-mt",
+      "hmac": "hmac",
+      "cmac": "cmac",
+      "gmac": "gmac",
+      "kmac": "kmac",
+      "kmac128": "kmac",
+      "kmac256": "kmac",
+      "siphash": "siphash",
+      "pbkdf2": "pbkdf2",
+      "pbkdf1": "pbkdf1",
+      "hkdf": "hkdf",
+      "scrypt": "scrypt",
+      "bcrypt": "bcrypt",
+      "argon2": "argon2",
+      "argon2id": "argon2",
+      "argon2i": "argon2",
+      "argon2d": "argon2",
+      "x963kdf": "x963kdf",
+      "concatkdf": "concatkdf",
+      "kbkdf": "kbkdf",
+      "sp800108": "kbkdf",
+      "ctrdrbg": "ctr-drbg",
+      "hmacdrbg": "hmac-drbg",
+      "hashdrbg": "hash-drbg",
+      "drbg": "drbg",
+      "null": "null",
+      "dss": "dsa",
+      "krb5": "other"
+    },
+    "hash": {
+      "sha1": [
+        "sha1",
+        null
+      ],
+      "sha": [
+        "sha2",
+        null
+      ],
+      "sha2": [
+        "sha2",
+        null
+      ],
+      "sha224": [
+        "sha2",
+        "224"
+      ],
+      "sha256": [
+        "sha2",
+        "256"
+      ],
+      "sha384": [
+        "sha2",
+        "384"
+      ],
+      "sha512": [
+        "sha2",
+        "512"
+      ],
+      "sha3": [
+        "sha3",
+        null
+      ],
+      "sha3224": [
+        "sha3",
+        "224"
+      ],
+      "sha3256": [
+        "sha3",
+        "256"
+      ],
+      "sha3384": [
+        "sha3",
+        "384"
+      ],
+      "sha3512": [
+        "sha3",
+        "512"
+      ],
+      "shake": [
+        "shake",
+        null
+      ],
+      "shake128": [
+        "shake",
+        "128"
+      ],
+      "shake256": [
+        "shake",
+        "256"
+      ],
+      "md5": [
+        "md5",
+        null
+      ],
+      "md4": [
+        "md4",
+        null
+      ],
+      "md2": [
+        "md2",
+        null
+      ],
+      "ripemd160": [
+        "ripemd160",
+        null
+      ],
+      "ripemd": [
+        "ripemd160",
+        null
+      ],
+      "blake2b": [
+        "blake2b",
+        null
+      ],
+      "blake2s": [
+        "blake2s",
+        null
+      ],
+      "blake3": [
+        "blake3",
+        null
+      ],
+      "sm3": [
+        "sm3",
+        null
+      ],
+      "whirlpool": [
+        "whirlpool",
+        null
+      ],
+      "keccak": [
+        "keccak",
+        null
+      ],
+      "keccak256": [
+        "keccak",
+        "256"
+      ]
+    },
+    "mode": {
+      "cbc": "cbc",
+      "ecb": "ecb",
+      "gcm": "gcm",
+      "ccm": "ccm",
+      "ctr": "ctr",
+      "cfb": "cfb",
+      "cfb8": "cfb",
+      "cfb128": "cfb",
+      "ofb": "ofb",
+      "xts": "xts",
+      "siv": "siv",
+      "gcmsiv": "gcm-siv",
+      "ocb": "ocb",
+      "ocb3": "ocb",
+      "eax": "eax",
+      "cts": "cts",
+      "kw": "kw",
+      "kwp": "kwp",
+      "wrap": "kw",
+      "keywrap": "kw"
+    },
+    "padding": {
+      "pkcs1": "pkcs1v15",
+      "pkcs1v15": "pkcs1v15",
+      "pkcs1v1": "pkcs1v15",
+      "pkcs5": "pkcs5",
+      "pkcs7": "pkcs7",
+      "oaep": "oaep",
+      "pss": "pss",
+      "nopadding": "none",
+      "nopad": "none",
+      "iso10126": "iso10126",
+      "iso7816": "iso7816",
+      "x923": "x923",
+      "ansix923": "x923",
+      "zeropadding": "zero",
+      "zeropad": "zero",
+      "zerobytepadding": "zero",
+      "raw": "raw"
+    },
+    "curve": {
+      "p192": "p192",
+      "p224": "p224",
+      "p256": "p256",
+      "p384": "p384",
+      "p521": "p521",
+      "nistp192": "p192",
+      "nistp224": "p224",
+      "nistp256": "p256",
+      "nistp384": "p384",
+      "nistp521": "p521",
+      "secp192r1": "p192",
+      "secp224r1": "p224",
+      "secp256r1": "p256",
+      "secp384r1": "p384",
+      "secp521r1": "p521",
+      "prime192v1": "p192",
+      "prime256v1": "p256",
+      "secp256k1": "secp256k1",
+      "brainpoolp256r1": "brainpoolp256r1",
+      "brainpoolp384r1": "brainpoolp384r1",
+      "brainpoolp512r1": "brainpoolp512r1",
+      "curve25519": "curve25519",
+      "curve448": "curve448",
+      "sm2p256v1": "sm2p256v1"
+    },
+    "suffix": {
+      "s": "s",
+      "f": "f"
+    },
+    "stop": [
+      "with",
+      "and",
+      "encryption",
+      "decryption",
+      "signature",
+      "signatures",
+      "sig",
+      "cipher",
+      "padding",
+      "mode",
+      "algorithm",
+      "alg",
+      "key",
+      "keys",
+      "bits",
+      "bit",
+      "mgf1",
+      "mgf",
+      "nist",
+      "fips",
+      "standard",
+      "scheme",
+      "plus",
+      "hash",
+      "digest",
+      "secure",
+      "of",
+      "the",
+      "version",
+      "v",
+      "pem",
+      "der",
+      "x509",
+      "cert",
+      "certificate",
+      "pkcs8",
+      "pkcs12",
+      "pkcs",
+      "random",
+      "prf",
+      "generic",
+      "default",
+      "legacy",
+      "strong",
+      "instance",
+      "engine",
+      "provider",
+      "javax",
+      "crypto",
+      "openssl",
+      "bouncycastle",
+      "bc",
+      "sun",
+      "sunjce",
+      "sunec",
+      "tls",
+      "ssl",
+      "dtls",
+      "export",
+      "anon",
+      "srp",
+      "ede",
+      "id",
+      "public",
+      "private",
+      "simple",
+      "robust",
+      "draft",
+      "hybrid",
+      "pure",
+      "pre",
+      "classic",
+      "encrypt",
+      "decrypt",
+      "sign",
+      "verify"
+    ]
+  }
+}

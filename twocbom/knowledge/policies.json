@@ -1,0 +1,21 @@
+{
+  "$comment": "Compliance policies evaluated by the assessment rules (Section 6 of the specification).",
+  "version": "2026.10.1",
+  "nistIr8547": {
+    "$comment": "NIST IR 8547 (Transition to Post-Quantum Cryptography Standards): quantum-vulnerable algorithms at 112-bit classical strength are deprecated after 2030; all quantum-vulnerable algorithms are disallowed after 2035.",
+    "deprecateAfter": 2030,
+    "disallowAfter": 2035,
+    "deprecationThresholdBits": 112,
+    "floorBits": 112
+  },
+  "cnsa2": {
+    "$comment": "CNSA 2.0 approved algorithm set (symmetric and PQC). Hybrid combiners are compliant when every PQ constituent is on this list.",
+    "approved": ["aes-256", "sha2-384", "sha2-512", "ml-kem-1024", "ml-dsa-87", "lms", "hss", "xmss", "xmss-mt"]
+  },
+  "migrationPriority": {
+    "$comment": "Priority assigned to quantum-vulnerable assets. Confidentiality functions are exposed to harvest-now-decrypt-later and therefore rank first.",
+    "confidentialityFunctions": ["encrypt", "decrypt", "encapsulate", "decapsulate", "keyderive"],
+    "confidentialityPrimitives": ["pke", "kem", "key-agree"],
+    "signaturePrimitives": ["signature"]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$comment": "Tool trust profiles. 'trust' (0-100) orders tool-asserted values when the knowledge base is not authoritative; 'strengths' lists attributes for which the tool's value gets a +1 specificity bonus; 'detectionMethod' is the default evidence method.",
+  "version": "2026.10.1",
+  "default": {"trust": 50, "detectionMethod": "unknown", "strengths": []},
+  "tools": {
+    "cbomkit": {
+      "aliases": ["cbomkit", "cbom-kit", "ibm cbomkit", "cbomkit-action", "cbomkit-hyperion", "sonar-cryptography", "sonar cryptography", "cbomkit-cli"],
+      "trust": 80, "detectionMethod": "static-source",
+      "strengths": ["parameterSetIdentifier", "mode", "padding", "cryptoFunctions", "primitive"]
+    },
+    "cbomkit-theia": {
+      "aliases": ["cbomkit-theia", "theia"],
+      "trust": 75, "detectionMethod": "static-binary",
+      "strengths": ["certificateFormat", "subjectName", "issuerName", "notValidBefore", "notValidAfter", "size", "format", "type"]
+    },
+    "cdxgen": {
+      "aliases": ["cdxgen", "@cyclonedx/cdxgen", "cyclonedx-generator", "cyclonedx generator"],
+      "trust": 70, "detectionMethod": "static-source",
+      "strengths": ["purl", "version"]
+    },
+    "cryptobom-forge": {
+      "aliases": ["cryptobom-forge", "cryptobomforge", "cryptobom forge", "forge"],
+      "trust": 65, "detectionMethod": "static-source",
+      "strengths": ["cryptoFunctions"]
+    },
+    "codeql": {"aliases": ["codeql"], "trust": 65, "detectionMethod": "static-source", "strengths": []},
+    "semgrep": {"aliases": ["semgrep", "semgrep-cbom"], "trust": 60, "detectionMethod": "static-source", "strengths": []},
+    "ibm-cbom": {"aliases": ["ibm research cbom", "cbom", "ibm cbom"], "trust": 60, "detectionMethod": "static-source", "strengths": []},
+    "manual": {"aliases": ["manual", "human", "analyst"], "trust": 90, "detectionMethod": "manual", "strengths": []}
+  }
+}
