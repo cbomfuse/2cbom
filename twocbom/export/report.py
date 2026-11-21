@@ -6,6 +6,30 @@ def _short(cid: str, n: int = 60) -> str:
     return cid if len(cid) <= n else cid[: n - 3] + "..."
 
 
+def _benchmark_section(bench: dict) -> list:
+    lines = ["", "## Benchmark", ""]
+    tp = bench.get("toolProfiles")
+    pr = bench.get("priors")
+    if tp:
+        base = tp.get("baseline", {})
+        lines.append(f"- Tool profile `{tp.get('version')}` (scoring model {bench.get('scoringModelVersion', '-')}, "
+                     f"baseline {base.get('commit', '-')[:12]}), digest `{tp.get('digest', '')[:23]}…`")
+    if pr:
+        lines.append(f"- Reliability priors from run `{pr.get('run')}` ({'with' if pr.get('ledger') else 'without'} ledger), "
+                     f"digest `{pr.get('digest', '')[:23]}…`; settlement rule: {bench.get('settlement', {}).get('rule', '-')}")
+    tools = (tp or {}).get("tools") or {}
+    measured = (pr or {}).get("tools") or {}
+    if tools or measured:
+        lines.append("")
+        lines.append("| tool | measured version | trust | strengths |")
+        lines.append("|---|---|---|---|")
+        for tid in sorted(set(tools) | set(measured)):
+            t, m = tools.get(tid, {}), measured.get(tid, {})
+            version = t.get("version") or m.get("version") or "-"
+            lines.append(f"| {tid} | {version} | {t.get('trust', '-')} | {', '.join(t.get('strengths', [])) or '-'} |")
+    return lines
+
+
 def to_markdown(doc: dict) -> str:
     lines = []
     conf = doc.get("conformance", {})
@@ -25,6 +49,9 @@ def to_markdown(doc: dict) -> str:
     lines.append("|---|---|---|---|---|---|---|")
     for s in doc.get("lineage", {}).get("sources", []):
         lines.append(f"| {s['id']} | {s['tool'].get('name')} {s['tool'].get('version', '')} | {s['format']} | {s['specVersion']} | {s['trust']} | {s.get('assetCount', 0)} | `{s['digest'][:23]}…` |")
+    bench = doc.get("lineage", {}).get("benchmark")
+    if bench:
+        lines.extend(_benchmark_section(bench))
     lines.append("")
     lines.append("## Post-quantum readiness")
     lines.append("")
@@ -75,5 +102,10 @@ def to_markdown(doc: dict) -> str:
         for c in conflicts:
             cands = "; ".join(f"{x['origin']}={x['value']!r}" for x in c["candidates"])
             lines.append(f"- `{_short(c['subject'], 50)}`.{c['attribute']} → `{c['chosen']!r}` ({c['rule']}); candidates: {cands}")
+            for r in c.get("reconciliation") or []:
+                used = ";".join(f"{k}={v}" for k, v in sorted((r.get("categoryUsed") or {}).items())) or "*"
+                verdict = f"prefers {r['preferred']}" if r.get("preferred") else "undecided"
+                lines.append(f"  - benchmark, {r['toolA']} vs {r['toolB']}: {verdict} (confidence {r['confidence']}, "
+                             f"{r['tier']} evidence in `{used}`)")
     lines.append("")
     return "\n".join(lines)

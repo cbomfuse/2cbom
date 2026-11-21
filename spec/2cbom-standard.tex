@@ -177,7 +177,9 @@ source identifier $\id_s = \codem{src-}h$ where $h$ is the first 12 hexadecimal 
 SHA-256 digest $\delta_s$ of the source bytes, a format $\phi_s \in$ \{cyclonedx-json,
 ibm-cbom-json, cyclonedx-prestandard-json\}, the source's own spec version $v_s$, a tool
 record $t_s = (\text{name}, \text{version})$, a trust value $\tau_s \in \{0,\dots,100\}$ and a
-default detection method $\mu_s \in V_{\mathrm{method}}$. $\Srcs$ denotes the set of source
+default detection method $\mu_s \in V_{\mathrm{method}}$, both taken from the tool profile of
+$t_s$ (the knowledge base's, overlaid by a benchmark profile when one is used,
+Section~\ref{sec:benchmark}). $\Srcs$ denotes the set of source
 records of a document. Because $\id_s$ is derived from content, the same source file always
 receives the same identifier.
 \end{definition}
@@ -255,8 +257,10 @@ kind $\rho \in V_{\mathrm{rel}}$, an optional qualifier \emph{via} (the cipher-s
 \begin{definition}[Finding and conflict]
 A finding is $(\text{code}, \text{severity} \in V_{\mathrm{sev}}, \text{subject}, \text{message},
 \text{rule})$. A conflict record is $(\text{subject}, \text{attribute}, \text{chosen},
-\text{candidates}, \text{rule})$ where \emph{candidates} lists every value asserted for the
-attribute together with its origin, strength, trust and confidence.
+\text{candidates}, \text{rule}, \text{answers})$ where \emph{candidates} lists every value asserted for the
+attribute together with its origin, strength, trust and confidence (and its benchmark preference
+$\omega$ when a benchmark was consulted), and the optional \emph{answers} lists the benchmark answers
+the decision consulted (Definition~\ref{def:benchpref}).
 \end{definition}
 
 \begin{definition}[Document]\label{def:document}
@@ -266,9 +270,10 @@ $$D = (\textit{ver}, \textit{profile}, \textit{sn}, \textit{gen}, \mathcal{I}, \
 where $\textit{ver}=\codem{1.0}$;
 $\textit{profile} \in \{\text{core}, \text{strict}\}$; $\textit{sn}$ is the serial number and
 $\mathcal{I}$ the integrity block (Section~\ref{sec:serialisation}); $\textit{gen}$ records
-generator and timestamp; $\mathcal{L} = (\Srcs, \text{ruleset}, \text{knowledge base},
-\text{conflicts})$ is the lineage; $\Gamma = (\textit{profile}, \text{conformant}, \#\text{errors},
-\#\text{warnings}, \#\text{infos})$ and $\Sigma_D$ a summary.
+generator and timestamp; $\mathcal{L} = (\Srcs, \text{ruleset},\allowbreak \text{knowledge base},\allowbreak
+\text{conflicts},\allowbreak \text{benchmark})$ is the lineage; $\Gamma = (\textit{profile}, \text{conformant},
+\#\text{errors}, \#\text{warnings}, \#\text{infos})$ and $\Sigma_D$ a summary. The benchmark member
+of $\mathcal{L}$ is present only when a benchmark was used (Section~\ref{sec:benchmark}).
 \end{definition}
 
 % ==========================================================================================
@@ -639,7 +644,7 @@ C10-PARAMETER-SET-MISSING & required slot undefined & error$^{\dagger}$ & warnin
 C11-VOCABULARY-VIOLATION & value outside closed vocabulary & error & error\\
 C12-CERT-VALIDITY-INVALID & malformed or inverted validity & error & error\\
 C13-LEVEL-INCONSISTENT & tool level contradicts catalogue & warning & warning\\
-C14-SOURCE-CONFLICT & tools disagree, resolved by precedence & info & info\\
+C14-SOURCE-CONFLICT & tools disagree, resolved by precedence or benchmark preference & info & info\\
 C15-WEAK-IDENTITY & identity by location / source-local & warning & warning\\
 C16-PRESTANDARD-NAME & pre-standard name mapped & info & info\\
 C17-SPEC-VERSION-NONSTANDARD & non-standard source spec version & info & info\\
@@ -648,6 +653,7 @@ C19-PROTOCOL-KEX-UNKNOWN & TLS~1.3 without recorded groups & warning & warning\\
 C20-HINT-MISMATCH & structured field contradicts name & warning & warning\\
 P01 / P02 & classically weak / quantum-vulnerable asset & warning / info & warning / info\\
 I01 / I02 & subsumption / key-size refinement applied & info & info\\
+I03-UNBENCHMARKED-VERSION & source tool version differs from the benchmarked one & info & info\\
 \bottomrule
 \end{tabularx}
 \caption{Finding codes (prefix \texttt{2CBOM-}) and severities. $^{*}$asymmetric key types;
@@ -664,8 +670,9 @@ components by identifier, relations by $(\text{from}, \text{to}, \text{kind}, \t
 evidence by its key, findings by (severity rank, code, subject, message), aliases and sources
 lexicographically. The canonical byte form is $\JCS(D)$, the RFC~8785 JSON Canonicalization
 Scheme (sorted members, no insignificant whitespace, shortest number form, UTF-8); \twocbom{}
-uses no non-integer numbers except evidence confidences, which \MUST{} be representable exactly
-as decimal fractions with at most four digits.
+uses no non-integer numbers except evidence confidences and the probabilities, confidences and
+scores of benchmark answers and benchmark lineage, which \MUST{} be representable exactly as
+decimal fractions with at most four digits.
 \end{definition}
 
 \begin{definition}[Digest scope, digest and serial number]
@@ -755,8 +762,10 @@ carry the semantic content of the merge:
 \paragraph{Resolution of attributes (salience 500).}
 \begin{definition}[Resolution order]\label{def:order}
 For \textsc{Attr} candidates of one $(\kappa, n)$ define the total order
-$$a \prec b \iff (\text{rank}(o_a), \sigma_a, \tau_a, c_a, v_a^{-1}, o_a^{-1}) >_{\mathrm{lex}} (\text{rank}(o_b), \sigma_b, \tau_b, c_b, v_b^{-1}, o_b^{-1})$$
-with $\text{rank}(\text{kb}) = 3 > \text{rank}(\text{derived}) = 2 > \text{rank}(\text{tool}) = 1$
+$$a \prec b \iff (\text{rank}(o_a), \omega_a, \sigma_a, \tau_a, c_a, v_a^{-1}, o_a^{-1}) >_{\mathrm{lex}} (\text{rank}(o_b), \omega_b, \sigma_b, \tau_b, c_b, v_b^{-1}, o_b^{-1})$$
+with $\text{rank}(\text{kb}) = 3 > \text{rank}(\text{derived}) = 2 > \text{rank}(\text{tool}) = 1$,
+the benchmark preference $\omega_a \in \mathbb{Z}$ of Definition~\ref{def:benchpref} ($\omega_a = 0$
+when no benchmark is used),
 and $v^{-1}, o^{-1}$ denoting lexicographic comparison of the JCS encoding of the value and of
 the origin identifier in \emph{ascending} order. \textsc{Resolved}$(\kappa,n,\cdot)$ takes the
 $\prec$-minimum. Multi-valued attributes (crypto functions, certification levels, standards,
@@ -769,6 +778,23 @@ e.g.\ CBOMkit for mode, padding and parameter set; cbomkit-theia for certificate
 attributes); trust $\tau$ is the tool profile's trust; the knowledge base is authoritative for
 $\lambda_c, \lambda_q$, OID, standards, FIPS status and the family's quantum class; identity
 slots are \emph{derived} from the canonical descriptor and therefore outrank tools.
+
+\begin{definition}[Benchmark preference]\label{def:benchpref}
+Let $B$ be a benchmark with reliability priors (Section~\ref{sec:benchmark}) and let $A$ be the
+candidates of one $(\kappa, n)$. If some $a \in A$ has $\text{rank}(o_a) > 1$, or $n$ is a
+multi-valued attribute, then $\omega_a = 0$ for all $a$. Otherwise, for every pair $a, b \in A$ whose
+normalised values differ and whose tools $t_a \ne t_b$ are both benchmarked by $B$, let
+$r = \mathrm{reconcile}_B(\min(t_a,t_b), \max(t_a,t_b), X_\kappa, \hat n)$ with the category
+$X_\kappa$ and attribute $\hat n$ of Definition~\ref{def:benchcat}. If $r$ prefers $t_a$ then
+$\omega_a$ gains 1 and $\omega_b$ loses 1, and symmetrically; an \emph{undecided} answer changes
+neither. $\omega_a$ is the sum over all such pairs (a Copeland score). The conflict record lists the
+answers $r$ (in the order of their tool pairs) and its rule is \code{settle.benchmark-preference}
+when the chosen candidate's $\omega$ exceeds that of every candidate with a different value.
+\end{definition}
+Because $\omega$ is a function of the candidate set and $B$ only, $\prec$ remains a total order on
+contents; with an undecided answer, strength and trust decide as without a benchmark, which is the
+``reconcile, scalar fallback'' rule. Calling $\mathrm{reconcile}$ with the tools in canonical order
+makes the answer independent of which tool happens to be compared first.
 
 \paragraph{Closure (salience 700).} Strings naming algorithms inside other assets
 (\code{signatureAlgorithm}, \code{subjectPublicKeyAlgorithm}, \code{algorithm} of key material,
@@ -793,36 +819,40 @@ Salience & Rule & Effect\\
 700 & closure.\{certificate-signature, certificate-subject-key, material-algorithm, material-secured-by, protocol-suites, protocol-crypto-refs, constituents\} & referenced algorithms, \textsc{Suite}s, relations\\
 690 & closure.refine-generic-by-material & sized instantiation\\
 600, 590 & enrich.catalogue, enrich.hybrid-levels & knowledge-base \textsc{Attr}s\\
-500 & settle.resolve-attribute & \textsc{Resolved}, \textsc{Conflict}\\
+500 & settle.resolve-attribute & \textsc{Resolved}, \textsc{Conflict} (with benchmark answers)\\
 400--380 & assess.\{algorithm, certificate, material, protocol\} & \textsc{Assessment}\\
-300--280 & check.C01 \ldots{} check.C20, check.P01-P02 & \textsc{Finding}\\
+300--280 & check.C01 \ldots{} check.C20, check.I03, check.P01-P02 & \textsc{Finding}\\
 \bottomrule
 \end{tabularx}
-\caption{The \twocbom{} rule base (45 rules) of the reference implementation.}\label{tab:rules}
+\caption{The \twocbom{} rule base (46 rules) of the reference implementation.}\label{tab:rules}
 \end{table}
 
 \subsection{The merge operator}
 \begin{definition}[Merge]\label{def:merge}
-For a finite set of sources $S = \{s_1,\dots,s_k\}$ and a profile $p$,
-$$\merge_p(S) = \mathrm{assemble}\Big(\lfp_{W_0}(T_{\mathcal R})\Big),\qquad
-  W_0 = \{\textsc{Config}(p)\} \cup \bigcup_{i} \mathrm{facts}(s_i),$$
+For a finite set of sources $S = \{s_1,\dots,s_k\}$, a profile $p$ and an optional benchmark $B$,
+$$\merge_{p,B}(S) = \mathrm{assemble}\Big(\lfp_{W_0}(T_{\mathcal R})\Big),\qquad
+  W_0 = \{\textsc{Config}(p, \digest(B))\} \cup \bigcup_{i} \mathrm{facts}_B(s_i),$$
 where \emph{assemble} builds $D$ from the fixpoint (one asset per \textsc{Asset} fact with its
 \textsc{Resolved} attributes, evidence, aliases, sources and assessment; relations grouped by
-key; findings and conflicts collected) and seals it (Section~\ref{sec:serialisation}).
+key; findings and conflicts collected; the benchmark's lineage recorded) and seals it
+(Section~\ref{sec:serialisation}). $\mathrm{facts}_B$ takes trust, detection method and strengths of
+each source from the tool profile overlaid by $B$, and $\merge_p = \merge_{p,\bot}$.
 \end{definition}
 
 \begin{theorem}[Order independence]\label{thm:merge}
-$\merge_p$ is a function of the \emph{set} $S$: for any permutation of the sources and any
-duplication of a source, $\merge_p$ yields the same $D^{\circ}$ and hence the same digest and
-serial number. Equivalently, the binary operation $\merge_p(S_1 \cup S_2)$ is commutative,
+For a fixed benchmark $B$, $\merge_{p,B}$ is a function of the \emph{set} $S$: for any permutation of
+the sources and any duplication of a source, it yields the same $D^{\circ}$ and hence the same digest
+and serial number. Equivalently, the binary operation $\merge_{p,B}(S_1 \cup S_2)$ is commutative,
 associative and idempotent.
 \end{theorem}
 \begin{proof}
 $W_0$ is a set union of per-source fact sets, each of which depends only on the source bytes
 (source identifiers are content-derived, so a duplicated source contributes identical facts).
 By Lemma~\ref{lem:fixpoint} the fixpoint is unique and order-free. The resolution order of
-Definition~\ref{def:order} is total and refers only to fact contents (never to arrival order),
-so every \textsc{Resolved} value is a function of its candidate set; set-union attributes are
+Definition~\ref{def:order} is total and refers only to fact contents and to $B$ (never to arrival
+order), so every \textsc{Resolved} value is a function of its candidate set; rules that need one
+candidate of a set (such as the descriptor of an algorithm) choose its $\prec$-minimum, never the
+first one asserted; set-union attributes are
 order-free by construction. \emph{assemble} sorts every collection by content keys. Hence
 $D^{\circ}$ is a function of $S$. Commutativity, associativity and idempotence follow from the
 corresponding properties of set union.
@@ -837,10 +867,10 @@ equal trust and specificity that disagree on a scalar attribute yield a determin
 
 \begin{figure}[ht]
 \begin{lstlisting}
-procedure MERGE(sources S, profile p):
-    W  <- { Config(p) }
+procedure MERGE(sources S, profile p, benchmark B):
+    W  <- { Config(p, digest(B)) }            # B optional: tool profile and/or priors
     for s in S:                               # order irrelevant (Theorem 3)
-        W <- W U facts(s)                     # syntactic lifting by the format adapter
+        W <- W U facts_B(s)                   # syntactic lifting; trust from the B-overlaid profile
     Phi <- {}                                  # refraction set
     loop:
         pick the first rule R (by -salience, registration) with an unfired binding
@@ -852,6 +882,50 @@ procedure MERGE(sources S, profile p):
 \end{lstlisting}
 \caption{The merge algorithm.}
 \end{figure}
+
+% ==========================================================================================
+\section{Benchmark-derived reliability}\label{sec:benchmark}
+% ==========================================================================================
+A \emph{benchmark} is the output of a run of the CBOMFuse orchestrator, which runs CBOM generators
+against an exact ground-truth corpus and records which build of each tool it measured. \twocbom{}
+reads two of its files; either may be used alone.
+\begin{description}[nosep]
+\item[Tool profile] (\code{twocbom/tools.json}) in the schema of the knowledge base's tool profiles,
+  with each tool's measured version. It is \emph{overlaid} on the knowledge base: a benchmarked tool
+  takes the benchmark's trust, detection method and strengths, its aliases become the union of both,
+  and tools the benchmark did not measure keep their entries.
+\item[Reliability priors] (\code{scorecard.json} with its ledger, or \code{priors.json} without):
+  per-category scores, head-to-head tables and the ledger, from which
+  $\mathrm{reconcile}_B(t_1, t_2, X, n)$ computes the probability that $t_1$ is the more reliable
+  source of attribute $n$ in category $X$ from head-to-head, attribute, category and global
+  evidence in that order, backing off facets of $X$ when the support is too small and discounting
+  each step, and abstains (\emph{undecided}) below a confidence of $0.6$.
+\end{description}
+Both files carry a scoring-model version; an implementation \MUST{} refuse files whose version it
+does not implement, because the numbers would not mean what it assumes. The reference
+implementation implements scoring model~1.0.
+
+\begin{definition}[Benchmark category and attribute]\label{def:benchcat}
+For an asset $\kappa$ and attribute $n$, $X_\kappa$ has the facets: \emph{assetType}, the asset type
+(a component of type library or framework counts as \code{library}); \emph{subtype}, the primitive
+of an algorithm, the type of key material, the type of a protocol, the format of a certificate
+(lower case) or \code{library}; \emph{family}, the descriptor family of an algorithm (or of the
+algorithm a key instantiates, when unique) in the benchmark's spelling (\code{tdea} $\mapsto$
+\code{3des}, \code{x25519} $\mapsto$ \code{ecdh}, \code{ed25519} $\mapsto$ \code{eddsa},
+\code{blake2b} $\mapsto$ \code{blake2}, \code{drbg} $\mapsto$ \code{csprng}, \ldots), the
+type-version of a protocol, or the package of a library's purl; and \emph{language}, when every
+located evidence record of $\kappa$ has a file extension of the same language. Facets are computed
+with $\omega = 0$, and a facet that $n$ itself defines is omitted. $\hat n$ is $n$ in the benchmark's
+attribute names (\code{toolPrimitive} $\mapsto$ \code{primitive}, \code{parameterSet} $\mapsto$
+\code{parameterSetIdentifier}, \code{algorithm} $\mapsto$ \code{algorithmRef}, the name of a
+component $\mapsto$ \code{identity}).
+\end{definition}
+
+The benchmark member of the lineage records the scoring model; the tool profile's run, digest,
+baseline and per tool the trust, strengths and the measured version, tag, commit, image digest and
+self-reported version; the priors' run, digest and whether they include the ledger; and the
+settlement parameters. Finding I03 (information) is raised for a source whose self-reported tool
+version is neither the measured nor the self-reported version of the benchmarked build.
 
 % ==========================================================================================
 \section{Mappings from source formats}\label{sec:mapping}
@@ -870,8 +944,8 @@ the presence of \code{cryptoProperties}.
 CycloneDX 1.6/1.7 & \twocbom{} & Note\\
 \midrule
 \endhead
-\code{metadata.tools.components[0]} (or legacy \code{tools[]}) & source tool, version & trust from tool profile\\
-\code{metadata.component} & root component & \\
+\code{metadata.tools.{components[], services[]}} (or legacy \code{tools[]}) & source tool, version: the first entry naming a known tool exactly, else the first containing a known alias (longest alias wins) & trust from tool profile\\
+\code{metadata.component} & root component; the source tool when \code{metadata.tools} is empty and its name is exactly a known alias & CBOM-Lens\\
 \code{components[].type=cryptographic-asset} & asset & nested components flattened\\
 \code{cryptoProperties.assetType} & $\tau_a$ & identity map\\
 \code{algorithmProperties.{primitive, parameterSetIdentifier, curve, mode, padding}} & hints to $\canon$ & name wins on conflict (C20)\\
@@ -940,7 +1014,8 @@ recoverable from the properties. The projection's \code{serialNumber} is UUIDv5 
       out of scope but straightforward (CycloneDX attestations or JWS over the canonical bytes).
 \item Trust values order tool assertions; they are declared in the lineage and \MUST{} be reviewed
       when a tool is upgraded. The knowledge base version is recorded in the lineage for the same
-      reason.
+      reason. Benchmark trust and priors describe the tool versions that were measured; the lineage
+      records those versions and finding I03 marks sources produced by another version.
 \item Evidence locations may reveal repository structure; documents intended for sharing \MAY{}
       strip prefixes (the implementation supports \code{--strip-prefix}) but \MUSTNOT{} remove
       evidence records, since C02 would then fail.
@@ -961,7 +1036,15 @@ Member names (JSON Schema \code{2cbom-1.0.schema.json} of the reference implemen
                            "specVersion": "1.6", "tool": {"name": "cbomkit", "version": "2.1.0"},
                            "trust": 80, "detectionMethod": "static-source", "assetCount": 6}],
               "ruleset": {"version": "1.0", "firedRules": {...}}, "knowledgeBase": {"version": "..."},
-              "conflicts": [{"subject": "2cbom:alg:...", "attribute": "...", "chosen": ..., "candidates": [...], "rule": "..."}]},
+              "conflicts": [{"subject": "2cbom:alg:...", "attribute": "...", "chosen": ..., "candidates": [...], "rule": "...",
+                             "reconciliation": [{"toolA": "cbomkit", "toolB": "cryptobom-forge", "attribute": "primitive",
+                                                 "category": {...}, "categoryUsed": {...}, "backoffSteps": 1, "tier": "head-to-head",
+                                                 "decision": "prefer-b", "preferred": "cryptobom-forge", "confidence": 0.8804,
+                                                 "weights": {...}, "support": {...}, "toolVersions": {...}, "explanation": [...]}]}],
+              "benchmark": {"scoringModelVersion": "1.0", "toolProfiles": {"version": "orchestrator-<run>", "digest": "sha256:...",
+                            "baseline": {...}, "tools": {"cbomkit": {"trust": 55, "strengths": [...], "version": "2.3.0", ...}}},
+                            "priors": {"run": "<run>", "digest": "sha256:...", "ledger": true, "baseline": {...}, "tools": {...}},
+                            "settlement": {"rule": "reconcile, scalar fallback", "undecidedBelow": 0.6, ...}}},
   "components": [{"id": "2cbom:comp:pkg:maven/org.bouncycastle/bcprov-jdk18on@1.78", "type": "library", ...}],
   "assets": [{"id": "2cbom:alg:aes-128-gcm", "type": "algorithm", "name": "aes-128-gcm",
               "aliases": ["AES", "AES-128-GCM", "AES128-GCM"],
@@ -1014,6 +1097,8 @@ standards in force.
 \section{Reference implementation}
 \code{twocbom} (Python~3.10+, no runtime dependencies) implements this specification:
 \code{twocbom.canonical} (Sections~\ref{sec:identity} and~\ref{sec:serialisation}),
+\code{twocbom.benchmark} (Section~\ref{sec:benchmark}; its port of the orchestrator's
+reconciliation is tested against answers the orchestrator produced),
 \code{twocbom.ingest} (Section~\ref{sec:mapping}), \code{twocbom.engine} and \code{twocbom.rules}
 (Section~\ref{sec:merge}, Table~\ref{tab:rules}), \code{twocbom.validate} (Section~\ref{sec:constraints})
 and \code{twocbom.export} (Section~\ref{sec:projection}). Its test suite checks

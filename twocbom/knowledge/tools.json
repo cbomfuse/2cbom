@@ -1,6 +1,6 @@
 {
-  "$comment": "Tool trust profiles. 'trust' (0-100) orders tool-asserted values when the knowledge base is not authoritative; 'strengths' lists attributes for which the tool's value gets a +1 specificity bonus; 'detectionMethod' is the default evidence method.",
-  "version": "2026.10.1",
+  "$comment": "Tool trust profiles. 'trust' (0-100) orders tool-asserted values when the knowledge base is not authoritative; 'strengths' lists attributes for which the tool's value gets a +1 specificity bonus; 'detectionMethod' is the default evidence method. Hand-set values; a benchmark profile exported by the orchestrator (twocbom merge --benchmark RUN_DIR) replaces the entries of the tools it measured. Tool ids match the orchestrator's spec ids. cryptoscan and cbom-lens carry the default trust (no hand-set opinion) until benchmarked.",
+  "version": "2026.11.1",
   "default": {"trust": 50, "detectionMethod": "unknown", "strengths": []},
   "tools": {
     "cbomkit": {
@@ -22,6 +22,14 @@
       "aliases": ["cryptobom-forge", "cryptobomforge", "cryptobom forge", "forge"],
       "trust": 65, "detectionMethod": "static-source",
       "strengths": ["cryptoFunctions"]
+    },
+    "cryptoscan": {
+      "aliases": ["cryptoscan", "csnp cryptoscan", "CSNP/cryptoscan", "qramm cryptoscan", "qramm-cryptoscan"],
+      "trust": 50, "detectionMethod": "static-source", "strengths": []
+    },
+    "cbom-lens": {
+      "aliases": ["cbom-lens", "cbom lens", "cbomlens", "omnitrust cbom-lens", "OmniTrustILM/cbom-lens"],
+      "trust": 50, "detectionMethod": "static-binary", "strengths": []
     },
     "codeql": {"aliases": ["codeql"], "trust": 65, "detectionMethod": "static-source", "strengths": []},
     "semgrep": {"aliases": ["semgrep", "semgrep-cbom"], "trust": 60, "detectionMethod": "static-source", "strengths": []},

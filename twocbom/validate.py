@@ -165,6 +165,11 @@ def build_schema() -> dict:
             "notes": {"type": "array", "items": {"type": "string"}},
         },
     }
+    benchmark = {
+        "type": "object",
+        "properties": {"scoringModelVersion": {"type": "string"}, "toolProfiles": {"type": "object"},
+                       "priors": {"type": "object"}, "settlement": {"type": "object"}},
+    }
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://2cbom.org/schema/2cbom-1.0.schema.json",
@@ -183,7 +188,7 @@ def build_schema() -> dict:
             "lineage": {"type": "object", "required": ["sources", "ruleset", "knowledgeBase"],
                         "properties": {"sources": {"type": "array", "minItems": 1, "items": source},
                                        "ruleset": {"type": "object"}, "knowledgeBase": {"type": "object"},
-                                       "conflicts": {"type": "array"}}},
+                                       "conflicts": {"type": "array"}, "benchmark": benchmark}},
             "components": {"type": "array", "items": component},
             "assets": {"type": "array", "items": asset},
             "relations": {"type": "array", "items": relation},

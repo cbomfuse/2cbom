@@ -43,15 +43,41 @@ def strength_of(wm: WorkingMemory, sid: str, attr: str) -> int:
     s = source_of(wm, sid)
     if not s:
         return 0
-    prof = KB.tool_profile(s.tool)
-    return 1 if attr in prof.strengths else 0
+    return 1 if attr in s.strengths else 0
+
+
+def benchmark_of(wm: WorkingMemory):
+    """The orchestrator benchmark named by the Config fact, or None."""
+    cfg = wm.one(Config)
+    if cfg is None or not cfg.benchmark:
+        return None
+    from ..benchmark import lookup
+    return lookup(cfg.benchmark)
+
+
+def origin_rank(origin: str) -> int:
+    return {"kb": 3, "derived": 2}.get(origin, 1)
+
+
+def scalar_key(a: Attr) -> tuple:
+    """The resolution order without benchmark preferences (Definition "Resolution order" with omega = 0)."""
+    return (-origin_rank(a.origin), -a.strength, -a.trust, -a.confidence, a.value_json, a.origin)
+
+
+def scalar_value(wm: WorkingMemory, cid: str, name: str, default=None):
+    """The value the benchmark-independent resolution order picks for (cid, name), from the Attr candidates."""
+    cands = wm.find(Attr, cid=cid, name=name)
+    if not cands:
+        return default
+    return U(min(cands, key=scalar_key).value_json)
 
 
 def descriptor_of(wm: WorkingMemory, cid: str) -> Optional[AlgorithmDescriptor]:
-    a = wm.one(Attr, cid=cid, name="descriptor")
-    if a is None:
+    """The canonical descriptor of an algorithm, chosen by content (resolution order), never by arrival."""
+    cands = wm.find(Attr, cid=cid, name="descriptor")
+    if not cands:
         return None
-    return AlgorithmDescriptor.from_dict(U(a.value_json))
+    return AlgorithmDescriptor.from_dict(U(min(cands, key=scalar_key).value_json))
 
 
 def resolved(wm: WorkingMemory, cid: str, name: str, default=None):

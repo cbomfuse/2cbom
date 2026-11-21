@@ -169,6 +169,23 @@
         },
         "conflicts": {
           "type": "array"
+        },
+        "benchmark": {
+          "type": "object",
+          "properties": {
+            "scoringModelVersion": {
+              "type": "string"
+            },
+            "toolProfiles": {
+              "type": "object"
+            },
+            "priors": {
+              "type": "object"
+            },
+            "settlement": {
+              "type": "object"
+            }
+          }
         }
       }
     },

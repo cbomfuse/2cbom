@@ -46,6 +46,7 @@ class Fact:
 class Config(Fact):
     profile: str
     strip_prefixes: tuple = ()
+    benchmark: str = ""        # digest of the orchestrator benchmark in use ("" = none)
 
 
 @dataclass(frozen=True)
@@ -59,6 +60,7 @@ class Source(Fact):
     trust: int
     method: str
     path: str
+    strengths: tuple = ()      # attributes the tool profile lists as the tool's strengths
 
 
 @dataclass(frozen=True)
@@ -180,6 +182,7 @@ class Conflict(Fact):
     chosen_json: str
     candidates_json: str
     rule: str
+    reconciliation_json: str = ""   # benchmark answers consulted for this conflict ("" = none)
 
 
 @dataclass(frozen=True)

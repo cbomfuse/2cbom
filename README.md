@@ -11,8 +11,11 @@ Pure Python 3.10+, no runtime dependencies (`jsonschema` is optional).
 
 ```
 pip install -e ".[dev]"
-python -m pytest -q                      # 124 tests
+python -m pytest -q                      # 158 tests (one also compares with the orchestrator when installed)
 twocbom merge examples/*.json -o merged.2cbom.json --cyclonedx merged.cdx.json --report report.md --trace trace.json
+twocbom merge cboms/*.json -o merged.2cbom.json --benchmark ../orch/results/latest   # use an orchestrator run
+twocbom benchmark ../orch/results/latest
+twocbom reconcile ../orch/results/latest --tool-a cbomkit --tool-b cdxgen --category "language=Java;assetType=algorithm" --attribute parameterSet
 twocbom validate merged.2cbom.json
 twocbom explain trace.json 2cbom:alg:x25519+ml-kem-768
 twocbom canon "AES/GCM/NoPadding" "SHA256withRSA" "Kyber768" "0x1301"
@@ -46,7 +49,7 @@ inventory built on such inputs is neither reproducible nor auditable.
 3. **Order-free merge with provenance.** Inputs are turned into a set of
    provenance-tagged assertions; a monotonic forward-chaining rule engine
    computes the unique fixpoint; attributes are resolved by a total order
-   (catalogue > derived > tool specificity > tool trust > confidence > value).
+   (catalogue > derived > benchmark preference > tool specificity > tool trust > confidence > value).
    The result is byte-identical for any input order (RFC 8785 canonical JSON,
    SHA-256 digest, UUIDv5 serial number) and every conflict is recorded.
 
@@ -58,21 +61,23 @@ inputs ──► ingest/            syntactic lifting to a format-agnostic IR
             ibmcbom.py         IBM 1.4-cbom-1.0 (crypto-asset, detectionContext, dependencyType)
         ──► engine/            production system: typed facts, indexed working memory,
                                salience-ordered agenda, refraction, monotonic fixpoint, trace
-        ──► rules/             the knowledge-driven rule base (45 rules, 7 phases)
+        ──► rules/             the knowledge-driven rule base (46 rules, 7 phases)
             normalize.py  900  canonical identity candidates
             resolve.py    850  subsumption ("AES" @ line 42 ⊂ "aes-128-gcm" @ line 42); DN-cert ⊂ fingerprint-cert
                           800  materialisation, provenance-tagged attributes, evidence, typed relations
             closure.py    700  cert → signature/key algorithms, key → algorithm (+size refinement),
                                protocol → cipher-suite constituents, hybrid → constituents
             enrich.py     600  knowledge base: security levels, OIDs, standards, FIPS, CNSA 2.0
-            settle.py     500  deterministic attribute resolution + conflict records
+            settle.py     500  deterministic attribute resolution + conflict records (+ benchmark preferences)
             assess.py     400  quantum class, IR 8547 timeline, migration priority (worst-of aggregation)
-            check.py      300  conformance findings C1–C20, P1–P2 (profile-dependent severities)
+            check.py      300  conformance findings C1–C20, P1–P2, I03 (profile-dependent severities)
         ──► merge.py           assembly, canonical serialisation, sealing (digest + serial number)
         ──► export/            CycloneDX 1.6 projection (lossy but conformant), Markdown report
         ──► validate.py        JSON Schema (generated from the closed vocabularies) + semantic checks
 knowledge/                     declarative KB: catalogue.json (≈70 families, parameter sets, levels,
                                OIDs), aliases.json (lexicon), tools.json (trust profiles), policies.json
+benchmark.py                   orchestrator runs: benchmark tool profiles, reliability priors and a
+                               dependency-free port of the orchestrator's reconcile() (scoring models 1.0, 1.1)
 ```
 
 The engine is a classic expert-system architecture: facts are immutable
@@ -111,6 +116,86 @@ they yield 27 canonical assets from 30 raw detections, among them:
 
 Finding codes are stable (`2CBOM-C10-PARAMETER-SET-MISSING`, …) and listed in
 the specification, Section 7.
+
+## Using benchmark results from the orchestrator
+
+The trust values in `knowledge/tools.json` are hand-set. The CBOMFuse
+orchestrator ([cbomfuse/orch](https://github.com/cbomfuse/orch)) measures the
+generators instead: it runs the newest (or pinned) releases against the
+[cbomfuse/baseline](https://github.com/cbomfuse/baseline) ground truth and writes,
+per run, `scorecard.json` (scores, head-to-head tables and the ledger),
+`priors.json` (the same without the ledger) and `twocbom/tools.json` (a tool
+profile in this repository's schema). Point a merge at the run directory:
+
+```
+twocbom merge cboms/*.json -o merged.2cbom.json --report report.md --benchmark ../orch/results/<run-id>
+```
+
+(`--tool-profiles FILE` and `--priors FILE` name the two parts explicitly; either
+may be used alone.) The benchmark enters the merge in two places.
+
+* **Tool profiles.** The run's `twocbom/tools.json` is laid over the packaged
+  profile: each benchmarked tool gets its measured trust (overall score × 100,
+  clamped to [20, 95]) and its measured strengths (attributes stated correctly
+  ≥ 80 % of the time, in at least five statements and for at least half of the
+  items that have them), and the names the tools write into their own CBOMs are
+  added to its aliases. Tools the run did not measure (codeql, semgrep, manual,
+  …) keep their hand-set entries.
+* **Settlement.** When two benchmarked tools assert different values for a
+  tool-asserted attribute, `settle.resolve-attribute` asks the run's
+  `reconcile()` which tool is more reliable for that attribute in the asset's
+  category: the language of its evidence, its asset type, subtype (primitive,
+  material type, protocol type) and family. Decided answers form a Copeland
+  score that ranks the candidates *before* strength and trust; undecided
+  answers (confidence below 0.6) leave strength and trust in charge. This is the
+  "reconcile, scalar fallback" rule, which scored best among the rules the
+  orchestrator evaluated on conflicts from held-out languages (79 % against 71 %
+  for hand-set trust, on a sample of 58 that cannot yet separate the rules
+  statistically). Values from the knowledge base
+  or derived from the canonical identity still outrank every tool, and tools
+  the benchmark did not measure are never compared through it.
+
+`reconcile()` is ported from the orchestrator (`twocbom/benchmark.py`), so 2CBOM
+keeps no runtime dependencies; the tests check the port against answers
+produced by the orchestrator itself. Files from a scoring model other than 1.0 or 1.1
+are refused. Prefer `scorecard.json` (what `--benchmark` picks in a run
+directory): `priors.json` has no ledger, so the attribute tier is unavailable
+and answers fall back to composite scores.
+
+The merged document records what was used and why:
+
+* `lineage.benchmark` holds the scoring model, the tool profile (run, digest,
+  baseline commit, and per tool the trust, strengths and the measured version,
+  tag, commit, image digest and self-reported version), the priors (run,
+  digest, ledger) and the settlement parameters;
+* every conflict the benchmark was consulted for carries a `reconciliation`
+  list (tools, attribute, queried and used category, backoff steps, tier,
+  decision, confidence, support, measured versions and the evidence trail),
+  conflicts it decided have rule `settle.benchmark-preference`, and finding C14
+  states the reason;
+* finding `2CBOM-I03-UNBENCHMARKED-VERSION` (info) marks a source whose tool
+  reports a version other than the one the benchmark measured.
+
+Without a benchmark the output is unchanged. `twocbom benchmark RUN` summarises
+a run and `twocbom reconcile RUN --tool-a A --tool-b B [--category …]
+[--attribute …]` answers a single query.
+
+Measure-what-you-merge caveats: trust is one number over the whole corpus, so
+it is only as meaningful as the corpus is for the tool. cbomkit-theia and
+cbom-lens scan files rather than source code, so a source-code baseline
+underrates them; export the profile without them
+(`orchestrator export twocbom RUN --tool cbomkit --tool cdxgen …`) to keep
+their hand-set entries.
+
+### Tool attribution
+
+A source is attributed to the first `metadata.tools` entry that names a known
+tool exactly, else to the first one that contains a known alias (the longest
+alias wins, so `cbomkit-theia` is not `cbomkit` and `CBOM-Lens` is not the
+generic `cbom`). This matters for tools that list a helper library first
+(cdxgen lists `dosai` before itself). A CBOM without `metadata.tools` is
+attributed to its `metadata.component` only when that name is exactly a known
+alias, which is how CBOM-Lens identifies itself.
 
 ## Positioning
 

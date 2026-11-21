@@ -12,7 +12,8 @@ from typing import Optional
 
 from ..canonical import kebab
 from .base import (IRAsset, IRComponent, IREvidence, IRRelation, IngestResult, SourceInfo,
-                   as_list, extract_tool, fingerprint_from_hashes, first, props_to_dict, to_float, to_int)
+                   as_list, extract_subject, extract_tool, extract_tools, fingerprint_from_hashes, first, props_to_dict,
+                   to_float, to_int)
 
 SUPPORTED_VERSIONS = ("1.5", "1.6", "1.7")
 
@@ -54,6 +55,8 @@ def ingest(doc: dict, source: SourceInfo) -> IngestResult:
     metadata = doc.get("metadata") or {}
     tool, tool_version = extract_tool(metadata)
     source.tool, source.tool_version = tool, tool_version
+    source.tools = extract_tools(metadata)
+    source.subject = extract_subject(metadata)
 
     flat: list = []
     root = metadata.get("component")
