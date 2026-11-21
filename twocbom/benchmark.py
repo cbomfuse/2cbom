@@ -20,9 +20,10 @@ run::
   orchestrator's evaluation.
 
 :class:`Reliability` is a dependency-free port of ``orchestrator.reconcile.Scorecard.reconcile`` for
-scoring model 1.0 (``tests/test_benchmark.py`` checks it against answers produced by the orchestrator
-itself).  Files produced under another scoring model are refused, because their numbers would not mean
-what this code assumes.
+scoring models 1.0 and 1.1 (``tests/test_benchmark.py`` checks it against answers produced by the
+orchestrator itself).  1.1 changed how the orchestrator matches detections (artifact cases, certificate
+identity), not the ledger rows or the aggregation repeated here.  Files produced under another scoring
+model are refused, because their numbers would not mean what this code assumes.
 """
 from __future__ import annotations
 
@@ -38,9 +39,9 @@ from typing import Iterable, Optional, Union
 from .canonical import digest as content_digest
 from .model import DETECTION_METHODS
 
-SUPPORTED_SCORING_MODELS = ("1.0",)
+SUPPORTED_SCORING_MODELS = ("1.0", "1.1")
 
-# The scoring parameters of orchestrator scoring model 1.0 (orchestrator.config.DEFAULT_CONFIG["scoring"]);
+# The scoring parameters of orchestrator scoring models 1.0/1.1 (orchestrator.config.DEFAULT_CONFIG["scoring"]);
 # a scorecard's own run.config.scoring overrides them, exactly as in the orchestrator.
 DEFAULT_SCORING = {
     "weights": {"recall": 0.35, "precision": 0.15, "completeness": 0.15, "correctness": 0.25, "locality": 0.10},
@@ -84,13 +85,18 @@ FAMILY_TO_BENCHMARK = {
     "ripemd160": "ripemd", "shake": "sha3", "keccak": "sha3",
 }
 
-# File extension of an evidence location -> benchmark language (the corpus uses the first five).
+# File extension of an evidence location -> benchmark language (the corpus uses the first five, plus
+# "Artifacts" for certificates, keys, keystores and secret/TLS configuration stored as files).
 LANGUAGE_BY_EXTENSION = {
     ".py": "Python", ".pyi": "Python", ".java": "Java", ".go": "Go", ".cs": "C#",
     ".ts": "TypeScript", ".tsx": "TypeScript", ".mts": "TypeScript", ".cts": "TypeScript",
     ".js": "JavaScript", ".jsx": "JavaScript", ".mjs": "JavaScript", ".cjs": "JavaScript",
     ".kt": "Kotlin", ".kts": "Kotlin", ".scala": "Scala", ".c": "C", ".h": "C", ".cc": "C++", ".cpp": "C++",
     ".cxx": "C++", ".hpp": "C++", ".rs": "Rust", ".rb": "Ruby", ".php": "PHP", ".swift": "Swift",
+    **{ext: "Artifacts" for ext in (
+        ".pem", ".crt", ".cer", ".cert", ".der", ".ca-bundle", ".p7b", ".p7c", ".p7s", ".spc", ".csr", ".req",
+        ".crl", ".key", ".pub", ".p8", ".pk8", ".p12", ".pfx", ".jks", ".jceks", ".bks", ".keystore",
+        ".truststore", ".env", ".tf", ".hcl", ".cnf")},
 }
 
 

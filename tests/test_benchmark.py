@@ -152,6 +152,9 @@ def test_vocabulary_bridges():
     assert language_of_location("src/main/java/A.java") == "Java" and language_of_location("x/y.cs") == "C#"
     assert language_of_location("lib/a.ts") == "TypeScript" and language_of_location("lib/a.js") == "JavaScript"
     assert language_of_location("host:443") is None and language_of_location("") is None
+    assert language_of_location("/scan/pki/server.crt") == "Artifacts" and language_of_location("keystores/a.p12") == "Artifacts"
+    assert language_of_location("secrets/app.env") == "Artifacts" and language_of_location("tls/openssl.cnf") == "Artifacts"
+    assert language_of_location("keys/deploy_ed25519") is None
     assert purl_family("pkg:pypi/cryptography@43.0.1") == "pypi/cryptography"
     assert purl_family("pkg:maven/org.bouncycastle/bcprov-jdk18on@1.78?type=jar") == "maven/org.bouncycastle/bcprov-jdk18on"
 
@@ -184,6 +187,12 @@ def test_load_variants(tmp_path):
     assert load_benchmark(SCORECARD).tool_profiles is None
     b = load_benchmark(tool_profiles=TOOLS_JSON, priors=SCORECARD)
     assert b.tool_profiles is not None and b.reliability.has_ledger
+
+
+def test_scoring_model_1_1_is_accepted():
+    doc = scorecard_doc()
+    doc["scoringModelVersion"] = "1.1"
+    assert Reliability(doc).scoring_model_version == "1.1"
 
 
 @pytest.mark.parametrize("mutate, message", [

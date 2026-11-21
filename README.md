@@ -77,7 +77,7 @@ inputs ──► ingest/            syntactic lifting to a format-agnostic IR
 knowledge/                     declarative KB: catalogue.json (≈70 families, parameter sets, levels,
                                OIDs), aliases.json (lexicon), tools.json (trust profiles), policies.json
 benchmark.py                   orchestrator runs: benchmark tool profiles, reliability priors and a
-                               dependency-free port of the orchestrator's reconcile() (scoring model 1.0)
+                               dependency-free port of the orchestrator's reconcile() (scoring models 1.0, 1.1)
 ```
 
 The engine is a classic expert-system architecture: facts are immutable
@@ -157,7 +157,7 @@ may be used alone.) The benchmark enters the merge in two places.
 
 `reconcile()` is ported from the orchestrator (`twocbom/benchmark.py`), so 2CBOM
 keeps no runtime dependencies; the tests check the port against answers
-produced by the orchestrator itself. Files from a scoring model other than 1.0
+produced by the orchestrator itself. Files from a scoring model other than 1.0 or 1.1
 are refused. Prefer `scorecard.json` (what `--benchmark` picks in a run
 directory): `priors.json` has no ledger, so the attribute tier is unavailable
 and answers fall back to composite scores.
