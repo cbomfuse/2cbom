@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 from . import RULESET_VERSION, __version__
+from .benchmark import Benchmark, register as register_benchmark
 from .canonical import digest as content_digest, jcs_dumps, normalize_location, stable_uuid
 from .engine import Engine, RunResult, WorkingMemory
 from .engine.facts import (Alias, Assessment as AssessmentFact, Asset as AssetFact, Attr, Component as ComponentFact,
@@ -21,7 +22,7 @@ from .engine.facts import (Alias, Assessment as AssessmentFact, Asset as AssetFa
                            RawAsset, RawComponent, RawEvidence, RawRelation, Relation as RelationFact, Resolved,
                            Source as SourceFact, Suite, J, U)
 from .ingest import IngestResult, ingest_file
-from .knowledge import load_kb
+from .knowledge import ToolProfiles, load_kb
 from .model import (Assessment, Asset, Component, ConflictRecord, Document, EvidenceRecord, Finding, ID_PREFIX, Relation,
                     SourceRecord, ToolRecord)
 from . import rules as _rules  # noqa: F401  (registers the rule base)
@@ -42,6 +43,7 @@ class MergeOptions:
     tool_overrides: dict = field(default_factory=dict)   # path -> tool name
     trace: bool = True
     timestamp: Optional[str] = None                      # ISO 8601; None = now
+    benchmark: Optional[Benchmark] = None                # orchestrator run: tool profiles and/or priors
 
 
 @dataclass
@@ -62,13 +64,24 @@ def source_id(digest: str) -> str:
 # --------------------------------------------------------------------------- #
 # facts from IR
 # --------------------------------------------------------------------------- #
-def assert_ingest(wm: WorkingMemory, res: IngestResult, options: MergeOptions) -> str:
+def tool_profiles_for(options: MergeOptions) -> ToolProfiles:
+    """The packaged tool profiles, with the benchmark's profile laid over them when one is given."""
+    b = options.benchmark
+    if b is not None and b.tool_profiles is not None:
+        return KB.tool_profiles.overlay(b.tool_profiles)
+    return KB.tool_profiles
+
+
+def assert_ingest(wm: WorkingMemory, res: IngestResult, options: MergeOptions,
+                  profiles: Optional[ToolProfiles] = None) -> str:
     src = res.source
     sid = source_id(src.digest)
-    prof = KB.tool_profile(src.tool)
-    tool_name = prof.name if prof.name != "unknown" else (src.tool or "unknown")
-    wm.add(SourceFact(sid, src.digest, src.fmt, src.spec_version, tool_name, src.tool_version or "",
-                      prof.trust, prof.detection_method, src.path))
+    profiles = profiles or tool_profiles_for(options)
+    listed = list(src.tools) if src.tools else ([(src.tool, src.tool_version)] if src.tool and src.tool != "unknown" else [])
+    prof, reported, version = profiles.attribute(listed, src.subject)
+    tool_name = prof.name if prof.name != "unknown" else (reported or "unknown")
+    wm.add(SourceFact(sid, src.digest, src.fmt, src.spec_version, tool_name, version or "",
+                      prof.trust, prof.detection_method, src.path, tuple(sorted(prof.strengths))))
     for c in res.components:
         wm.add(RawComponent(sid, c.ref, c.ctype or "unknown", c.name or "", c.version or "", c.group or "",
                             c.purl or "", c.cpe or "", bool(c.root)))
@@ -236,13 +249,16 @@ def assemble(wm: WorkingMemory, run: RunResult, options: MergeOptions) -> Docume
         rel.sources.append(r.sid)
 
     findings = [Finding(f.code, f.severity, f.subject, f.message, f.rule) for f in wm.get(FindingFact)]
-    conflicts = [ConflictRecord(c.cid, c.name, U(c.chosen_json), U(c.candidates_json), c.rule) for c in wm.get(ConflictFact)]
+    conflicts = [ConflictRecord(c.cid, c.name, U(c.chosen_json), U(c.candidates_json), c.rule,
+                                U(c.reconciliation_json) if c.reconciliation_json else None)
+                 for c in wm.get(ConflictFact)]
 
     return Document(profile=options.profile, sources=sources, components=components, assets=assets,
                     relations=list(relations.values()), findings=findings, conflicts=conflicts,
                     generator={"name": "twocbom", "version": __version__},
                     knowledgeBaseVersion=KB.version, rulesetVersion=RULESET_VERSION,
-                    firedRules=dict(run.fired), timestamp=options.timestamp)
+                    firedRules=dict(run.fired), timestamp=options.timestamp,
+                    benchmark=options.benchmark.lineage() if options.benchmark is not None else None)
 
 
 # --------------------------------------------------------------------------- #
@@ -272,10 +288,12 @@ def seal(doc: dict) -> dict:
 # --------------------------------------------------------------------------- #
 def merge_ingested(inputs: list, options: Optional[MergeOptions] = None) -> MergeResult:
     options = options or MergeOptions()
+    bench_id = register_benchmark(options.benchmark) if options.benchmark is not None else ""
+    profiles = tool_profiles_for(options)
     wm = WorkingMemory()
-    wm.add(Config(options.profile, tuple(options.strip_prefixes)))
+    wm.add(Config(options.profile, tuple(options.strip_prefixes), bench_id))
     for res in inputs:
-        assert_ingest(wm, res, options)
+        assert_ingest(wm, res, options, profiles)
     engine = Engine(trace=options.trace)
     run = engine.run(wm)
     if options.timestamp is None:

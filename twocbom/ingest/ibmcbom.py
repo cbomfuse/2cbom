@@ -12,7 +12,8 @@ from __future__ import annotations
 
 from ..canonical import kebab
 from .base import (IRAsset, IRComponent, IREvidence, IRRelation, IngestResult, SourceInfo,
-                   as_list, extract_tool, fingerprint_from_hashes, first, props_to_dict, to_float, to_int)
+                   as_list, extract_subject, extract_tool, extract_tools, fingerprint_from_hashes, first, props_to_dict,
+                   to_float, to_int)
 
 _ASSET_TYPES = {
     "algorithm": "algorithm", "certificate": "certificate", "protocol": "protocol",
@@ -45,6 +46,8 @@ def ingest(doc: dict, source: SourceInfo) -> IngestResult:
     if tool == "unknown":
         tool = "ibm-cbom"
     source.tool, source.tool_version = tool, tool_version
+    source.tools = extract_tools(metadata) or [(tool, tool_version)]
+    source.subject = extract_subject(metadata)
 
     root = metadata.get("component")
     if isinstance(root, dict):

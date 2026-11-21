@@ -20,6 +20,8 @@ class SourceInfo:
     tool: str = "unknown"
     tool_version: str = ""
     notes: list = field(default_factory=list)
+    tools: list = field(default_factory=list)       # every (name, version) in metadata.tools, document order
+    subject: tuple = ("", "")                         # metadata.component (name, version)
 
 
 @dataclass
@@ -111,29 +113,50 @@ def to_float(v) -> Optional[float]:
         return None
 
 
-def extract_tool(metadata: dict) -> tuple[str, str]:
-    """Return (tool name, version) from CycloneDX 1.4/1.5/1.6/1.7 ``metadata.tools`` variants."""
+def extract_tools(metadata: dict) -> list:
+    """Every (name, version) listed in CycloneDX 1.4/1.5/1.6/1.7 ``metadata.tools``, in document order.
+
+    Tool components come first, then services (CycloneDX 1.5+ object form); the legacy array form is
+    read as is.  Which entry names the generator is decided later, against the tool profiles.
+    """
     tools = (metadata or {}).get("tools")
+    out = []
     if isinstance(tools, dict):
-        comps = tools.get("components") or []
-        if comps:
-            c = comps[0]
+        for c in tools.get("components") or []:
+            if not isinstance(c, dict):
+                continue
             name = c.get("name") or "unknown"
             group = c.get("group")
             if group and group not in name:
                 name = f"{group}/{name}"
-            return name, str(c.get("version") or "")
-        services = tools.get("services") or []
-        if services:
-            return services[0].get("name", "unknown"), str(services[0].get("version") or "")
-    elif isinstance(tools, list) and tools:
-        t = tools[0]
-        name = t.get("name") or "unknown"
-        vendor = t.get("vendor")
-        if vendor and vendor.lower() not in name.lower():
-            name = f"{vendor} {name}"
-        return name, str(t.get("version") or "")
-    return "unknown", ""
+            out.append((str(name), str(c.get("version") or "")))
+        for s in tools.get("services") or []:
+            if isinstance(s, dict):
+                out.append((str(s.get("name") or "unknown"), str(s.get("version") or "")))
+    elif isinstance(tools, list):
+        for t in tools:
+            if not isinstance(t, dict):
+                continue
+            name = t.get("name") or "unknown"
+            vendor = t.get("vendor")
+            if vendor and vendor.lower() not in name.lower():
+                name = f"{vendor} {name}"
+            out.append((str(name), str(t.get("version") or "")))
+    return out
+
+
+def extract_tool(metadata: dict) -> tuple[str, str]:
+    """Return (tool name, version) of the first entry of ``metadata.tools``."""
+    tools = extract_tools(metadata)
+    return tools[0] if tools else ("unknown", "")
+
+
+def extract_subject(metadata: dict) -> tuple[str, str]:
+    """(name, version) of ``metadata.component``, the subject of the BOM (some tools name themselves there)."""
+    comp = (metadata or {}).get("component")
+    if not isinstance(comp, dict):
+        return "", ""
+    return str(comp.get("name") or ""), str(comp.get("version") or "")
 
 
 def fingerprint_from_hashes(hashes) -> Optional[str]:

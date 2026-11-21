@@ -308,10 +308,14 @@ class ConflictRecord:
     chosen: Any
     candidates: list
     rule: str
+    reconciliation: Optional[list] = None   # benchmark answers the decision consulted
 
     def to_dict(self):
-        return {"subject": self.subject, "attribute": self.attribute, "chosen": self.chosen,
-                "candidates": self.candidates, "rule": self.rule}
+        d = {"subject": self.subject, "attribute": self.attribute, "chosen": self.chosen,
+             "candidates": self.candidates, "rule": self.rule}
+        if self.reconciliation:
+            d["reconciliation"] = self.reconciliation
+        return d
 
 
 @dataclass
@@ -328,6 +332,7 @@ class Document:
     rulesetVersion: str
     firedRules: dict
     timestamp: Optional[str] = None
+    benchmark: Optional[dict] = None          # lineage of the orchestrator benchmark, when one was used
 
     def to_dict(self) -> dict:
         """Return the document without integrity information (digest/serialNumber are added by the serializer)."""
@@ -340,16 +345,19 @@ class Document:
             if a.assessment:
                 by_class[a.assessment.quantumClass] = by_class.get(a.assessment.quantumClass, 0) + 1
                 by_priority[a.assessment.migrationPriority] = by_priority.get(a.assessment.migrationPriority, 0) + 1
+        lineage = {
+            "sources": [s.to_dict() for s in sorted(self.sources, key=lambda s: s.id)],
+            "ruleset": {"version": self.rulesetVersion, "firedRules": dict(sorted(self.firedRules.items()))},
+            "knowledgeBase": {"version": self.knowledgeBaseVersion},
+            "conflicts": [c.to_dict() for c in sorted(self.conflicts, key=lambda c: (c.subject, c.attribute))],
+        }
+        if self.benchmark:
+            lineage["benchmark"] = self.benchmark
         return {
             "2cbomVersion": TWOCBOM_VERSION,
             "profile": self.profile,
             "generated": _clean({"timestamp": self.timestamp, "generator": self.generator}),
-            "lineage": {
-                "sources": [s.to_dict() for s in sorted(self.sources, key=lambda s: s.id)],
-                "ruleset": {"version": self.rulesetVersion, "firedRules": dict(sorted(self.firedRules.items()))},
-                "knowledgeBase": {"version": self.knowledgeBaseVersion},
-                "conflicts": [c.to_dict() for c in sorted(self.conflicts, key=lambda c: (c.subject, c.attribute))],
-            },
+            "lineage": lineage,
             "components": [c.to_dict() for c in sorted(self.components, key=lambda c: c.id)],
             "assets": [a.to_dict() for a in sorted(self.assets, key=lambda a: a.id)],
             "relations": [r.to_dict() for r in sorted(self.relations, key=lambda r: r.key())],

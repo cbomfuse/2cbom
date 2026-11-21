@@ -2,6 +2,10 @@
 
     twocbom merge a.json b.json c.json -o merged.2cbom.json [--cyclonedx out.cdx.json] [--report out.md]
                   [--trace trace.json] [--profile strict|core] [--strip-prefix PREFIX]... [--tool path=name]...
+                  [--benchmark RUN_DIR] [--tool-profiles tools.json] [--priors scorecard.json]
+    twocbom benchmark RUN_DIR
+    twocbom reconcile RUN_DIR --tool-a cbomkit --tool-b cdxgen [--category "language=Java;assetType=algorithm"]
+                      [--attribute parameterSet] [--json]
     twocbom validate merged.2cbom.json
     twocbom inspect input.json
     twocbom canon "AES/GCM/NoPadding" ["SHA256withRSA" ...]
@@ -16,6 +20,7 @@ import json
 import sys
 
 from . import __version__
+from .benchmark import BenchmarkError, load_benchmark
 from .canonical import jcs_dumps, parse_algorithm, parse_cipher_suite
 from .export import to_cyclonedx, to_markdown
 from .ingest import detect_format, ingest_file, load_json
@@ -33,13 +38,25 @@ def _write(path: str, text: str) -> None:
             fh.write(text)
 
 
+def _load_benchmark(args):
+    if not (getattr(args, "benchmark", None) or getattr(args, "tool_profiles", None) or getattr(args, "priors", None)):
+        return None
+    return load_benchmark(args.benchmark, tool_profiles=args.tool_profiles, priors=args.priors)
+
+
 def cmd_merge(args) -> int:
     overrides = {}
     for item in args.tool or []:
         path, _, name = item.partition("=")
         overrides[path] = name
+    try:
+        bench = _load_benchmark(args)
+    except BenchmarkError as exc:
+        sys.stderr.write(f"twocbom: {exc}\n")
+        return 2
     opts = MergeOptions(profile=args.profile, strip_prefixes=tuple(args.strip_prefix or ()),
-                        tool_overrides=overrides, trace=bool(args.trace), timestamp=args.timestamp)
+                        tool_overrides=overrides, trace=bool(args.trace), timestamp=args.timestamp,
+                        benchmark=bench)
     result = merge_files(args.inputs, opts)
     doc = result.document
     text = jcs_dumps(doc) if args.compact else json.dumps(doc, indent=2, ensure_ascii=False, sort_keys=True)
@@ -51,6 +68,12 @@ def cmd_merge(args) -> int:
     if args.trace:
         _write(args.trace, json.dumps(result.run.to_dict(), indent=1, ensure_ascii=False))
     conf = doc["conformance"]
+    if bench is not None:
+        decided = sum(1 for c in doc["lineage"]["conflicts"] if c["rule"] == "settle.benchmark-preference")
+        consulted = sum(1 for c in doc["lineage"]["conflicts"] if c.get("reconciliation"))
+        run = (doc["lineage"]["benchmark"].get("priors") or {}).get("run") or \
+            (doc["lineage"]["benchmark"].get("toolProfiles") or {}).get("version")
+        sys.stderr.write(f"twocbom: benchmark {run}: consulted for {consulted} conflict(s), decided {decided}\n")
     sys.stderr.write(f"twocbom: merged {len(args.inputs)} source(s) -> {len(doc['assets'])} assets, "
                      f"{len(doc['components'])} components, {len(doc['relations'])} relations; "
                      f"{result.run.cycles} inference cycles, {sum(result.run.fired.values())} rule firings; "
@@ -129,6 +152,48 @@ def cmd_explain(args) -> int:
     return 0
 
 
+def cmd_benchmark(args) -> int:
+    try:
+        bench = load_benchmark(args.path)
+    except BenchmarkError as exc:
+        print(f"twocbom: {exc}", file=sys.stderr)
+        return 2
+    print(bench.summary())
+    return 0
+
+
+def cmd_reconcile(args) -> int:
+    from .benchmark import benchmark_attribute_name, category_key, parse_category
+    try:
+        bench = load_benchmark(args.path)
+    except BenchmarkError as exc:
+        print(f"twocbom: {exc}", file=sys.stderr)
+        return 2
+    if bench.reliability is None:
+        print("twocbom: this benchmark has no scorecard.json or priors.json to reconcile with", file=sys.stderr)
+        return 2
+    try:
+        category = parse_category(args.category)
+    except ValueError as exc:
+        print(f"twocbom: {exc}", file=sys.stderr)
+        return 2
+    r = bench.reliability.reconcile(args.tool_a, args.tool_b, category, benchmark_attribute_name(args.attribute),
+                                    args.value_a, args.value_b)
+    if args.json:
+        print(json.dumps(r.to_dict(), indent=2))
+        return 0
+    print(f"{r.tool_a} vs {r.tool_b} on {r.attribute or 'any attribute'}: {r.decision}"
+          + (f" ({r.preferred}, confidence {r.confidence:.2f})" if r.preferred else f" (confidence {r.confidence:.2f})"))
+    print(f"  tier {r.tier}; category {category_key(r.category)} -> {category_key(r.category_used)} "
+          f"after {r.backoff_steps} backoff step(s)")
+    for line in r.explanation:
+        print(f"  {line}")
+    versions = ", ".join(f"{k} {v}" for k, v in r.versions.items() if v)
+    if versions:
+        print(f"  measured versions: {versions}")
+    return 0
+
+
 def cmd_rules(args) -> int:
     from .rules import rule_catalogue
     for r in rule_catalogue():
@@ -158,7 +223,27 @@ def main(argv=None) -> int:
     p.add_argument("--timestamp", help="ISO 8601 generation timestamp (default: now)")
     p.add_argument("--compact", action="store_true", help="write RFC 8785 canonical JSON instead of pretty JSON")
     p.add_argument("--fail-on-nonconformance", action="store_true", help="exit 2 when the document is not conformant")
+    p.add_argument("--benchmark", metavar="PATH",
+                   help="orchestrator run directory (or its twocbom/ export, or one of its files): benchmark tool "
+                        "profiles and reliability priors")
+    p.add_argument("--tool-profiles", metavar="FILE", help="benchmark tool profile (orchestrator twocbom/tools.json)")
+    p.add_argument("--priors", metavar="FILE", help="reliability priors (orchestrator scorecard.json or priors.json)")
     p.set_defaults(func=cmd_merge)
+
+    p = sub.add_parser("benchmark", help="summarise an orchestrator benchmark (tools, versions, trust, priors)")
+    p.add_argument("path", help="run directory, its twocbom/ export, or a tools.json / scorecard.json / priors.json")
+    p.set_defaults(func=cmd_benchmark)
+
+    p = sub.add_parser("reconcile", help="ask a benchmark which of two tools to believe for an attribute and category")
+    p.add_argument("path", help="run directory, scorecard.json or priors.json")
+    p.add_argument("--tool-a", required=True)
+    p.add_argument("--tool-b", required=True)
+    p.add_argument("--category", default="", help="facets, e.g. 'language=Java;assetType=algorithm;subtype=ae'")
+    p.add_argument("--attribute", help="attribute in dispute (2CBOM or CycloneDX name, e.g. parameterSet, oid)")
+    p.add_argument("--value-a", help="tool A's value (optional; a missing value asks the completeness tier)")
+    p.add_argument("--value-b", help="tool B's value")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_reconcile)
 
     p = sub.add_parser("validate", help="validate a 2CBOM document")
     p.add_argument("document")

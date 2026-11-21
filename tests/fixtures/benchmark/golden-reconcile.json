@@ -1,0 +1,1485 @@
+{
+ "scorecard": [
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "primitive",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "backoffSteps": 1,
+    "tier": "head-to-head",
+    "pABetter": 0.1196,
+    "relevance": 0.8696,
+    "confidence": 0.8804,
+    "decision": "prefer-b",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cbomkit": 0.1196,
+     "cryptobom-forge": 0.8804
+    },
+    "support": {
+     "disagreements": 3,
+     "counts": {
+      "aWins": 0,
+      "bWins": 3,
+      "bothWrong": 0,
+      "agree": 0,
+      "agreeWrong": 0,
+      "aOnly": 0,
+      "bOnly": 0,
+      "bothMissed": 0,
+      "compared": 3
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on primitive in assetType=algorithm;family=aes;subtype=ae: cbomkit right 0x, cryptobom-forge right 3x, both wrong 0x, agreed 0x",
+     "backed off 1 facet(s) from assetType=algorithm;family=aes;language=Java;subtype=ae to assetType=algorithm;family=aes;subtype=ae; relevance 0.87",
+     "P(cbomkit more reliable) = 0.120 -> prefer-b"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cryptobom-forge",
+    "toolB": "cbomkit",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cryptobom-forge",
+    "toolB": "cbomkit",
+    "attribute": "primitive",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "backoffSteps": 1,
+    "tier": "head-to-head",
+    "pABetter": 0.8804,
+    "relevance": 0.8696,
+    "confidence": 0.8804,
+    "decision": "prefer-a",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cryptobom-forge": 0.8804,
+     "cbomkit": 0.1196
+    },
+    "support": {
+     "disagreements": 3,
+     "counts": {
+      "aWins": 3,
+      "bWins": 0,
+      "bothWrong": 0,
+      "agree": 0,
+      "agreeWrong": 0,
+      "aOnly": 0,
+      "bOnly": 0,
+      "bothMissed": 0,
+      "compared": 3
+     }
+    },
+    "toolVersions": {
+     "cryptobom-forge": "1.1.0",
+     "cbomkit": "2.3.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on primitive in assetType=algorithm;family=aes;subtype=ae: cryptobom-forge right 3x, cbomkit right 0x, both wrong 0x, agreed 0x",
+     "backed off 1 facet(s) from assetType=algorithm;family=aes;language=Java;subtype=ae to assetType=algorithm;family=aes;subtype=ae; relevance 0.87",
+     "P(cryptobom-forge more reliable) = 0.880 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "language": "Go",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "primitive",
+    "category": {
+     "language": "Go",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "backoffSteps": 1,
+    "tier": "head-to-head",
+    "pABetter": 0.1196,
+    "relevance": 0.8696,
+    "confidence": 0.8804,
+    "decision": "prefer-b",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cbomkit": 0.1196,
+     "cryptobom-forge": 0.8804
+    },
+    "support": {
+     "disagreements": 3,
+     "counts": {
+      "aWins": 0,
+      "bWins": 3,
+      "bothWrong": 0,
+      "agree": 0,
+      "agreeWrong": 0,
+      "aOnly": 0,
+      "bOnly": 0,
+      "bothMissed": 0,
+      "compared": 3
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on primitive in assetType=algorithm;family=aes;subtype=ae: cbomkit right 0x, cryptobom-forge right 3x, both wrong 0x, agreed 0x",
+     "backed off 1 facet(s) from assetType=algorithm;family=aes;language=Go;subtype=ae to assetType=algorithm;family=aes;subtype=ae; relevance 0.87",
+     "P(cbomkit more reliable) = 0.120 -> prefer-b"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "category": {
+     "language": "Python",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "attribute": "primitive",
+    "category": {
+     "language": "Python",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm",
+     "subtype": "hash"
+    },
+    "backoffSteps": 2,
+    "tier": "attribute",
+    "pABetter": 0.5296,
+    "relevance": 0.7692,
+    "confidence": 0.5296,
+    "decision": "undecided",
+    "preferred": null,
+    "weights": {
+     "cbomkit": 0.5296,
+     "cdxgen": 0.4704
+    },
+    "support": {
+     "cbomkit": {
+      "correct": 6.0,
+      "reported": 6
+     },
+     "cdxgen": {
+      "correct": 5.0,
+      "reported": 5
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cdxgen": "13.7.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "primitive correctness in assetType=algorithm;subtype=hash: cbomkit 6.0/6, cdxgen 5.0/5",
+     "backed off 2 facet(s) from assetType=algorithm;family=sha2;language=Python;subtype=hash to assetType=algorithm;subtype=hash; relevance 0.77",
+     "P(cbomkit more reliable) = 0.530 -> undecided"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "attribute": "oid"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "attribute": "oid",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "backoffSteps": 1,
+    "tier": "head-to-head",
+    "pABetter": 0.8804,
+    "relevance": 0.8696,
+    "confidence": 0.8804,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.8804,
+     "cdxgen": 0.1196
+    },
+    "support": {
+     "disagreements": 3,
+     "counts": {
+      "aWins": 3,
+      "bWins": 0,
+      "bothWrong": 0,
+      "agree": 0,
+      "agreeWrong": 0,
+      "aOnly": 0,
+      "bOnly": 0,
+      "bothMissed": 1,
+      "compared": 4
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cdxgen": "13.7.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on oid in assetType=algorithm;family=sha2;subtype=hash: cbomkit right 3x, cdxgen right 0x, both wrong 0x, agreed 0x",
+     "backed off 1 facet(s) from assetType=algorithm;family=sha2;language=Java;subtype=hash to assetType=algorithm;family=sha2;subtype=hash; relevance 0.87",
+     "P(cbomkit more reliable) = 0.880 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cdxgen",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "language": "Python",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "attribute": "parameterSet"
+   },
+   "answer": {
+    "toolA": "cdxgen",
+    "toolB": "cryptobom-forge",
+    "attribute": "parameterSetIdentifier",
+    "category": {
+     "language": "Python",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "categoryUsed": {},
+    "backoffSteps": 4,
+    "tier": "attribute",
+    "pABetter": 0.1919,
+    "relevance": 0.625,
+    "confidence": 0.8081,
+    "decision": "prefer-b",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cdxgen": 0.1919,
+     "cryptobom-forge": 0.8081
+    },
+    "support": {
+     "cdxgen": {
+      "correct": 1.0,
+      "reported": 4
+     },
+     "cryptobom-forge": {
+      "correct": 7.0,
+      "reported": 7
+     }
+    },
+    "toolVersions": {
+     "cdxgen": "13.7.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "parameterSetIdentifier correctness in *: cdxgen 1.0/4, cryptobom-forge 7.0/7",
+     "backed off 4 facet(s) from assetType=algorithm;family=sha2;language=Python;subtype=hash to *; relevance 0.62",
+     "P(cdxgen more reliable) = 0.192 -> prefer-b"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm"
+    },
+    "attribute": "executionEnvironment"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "attribute": "executionEnvironment",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm"
+    },
+    "categoryUsed": {
+     "language": "Java",
+     "assetType": "algorithm"
+    },
+    "backoffSteps": 0,
+    "tier": "category",
+    "pABetter": 0.781,
+    "relevance": 1.0,
+    "confidence": 0.781,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.781,
+     "cdxgen": 0.219
+    },
+    "support": {
+     "cbomkit": {
+      "score": 0.8939,
+      "support": 6
+     },
+     "cdxgen": {
+      "score": 0.6806,
+      "support": 6
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cdxgen": "13.7.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "composite score in assetType=algorithm;language=Java: cbomkit 0.894 (n=6), cdxgen 0.681 (n=6)",
+     "P(cbomkit more reliable) = 0.781 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "assetType": "related-crypto-material",
+     "subtype": "secret-key",
+     "family": "aes"
+    },
+    "attribute": "size"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "size",
+    "category": {
+     "assetType": "related-crypto-material",
+     "subtype": "secret-key",
+     "family": "aes"
+    },
+    "categoryUsed": {},
+    "backoffSteps": 3,
+    "tier": "attribute",
+    "pABetter": 0.6379,
+    "relevance": 0.6897,
+    "confidence": 0.6379,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.6379,
+     "cryptobom-forge": 0.3621
+    },
+    "support": {
+     "cbomkit": {
+      "correct": 1.0,
+      "reported": 1
+     },
+     "cryptobom-forge": {
+      "correct": 1.0,
+      "reported": 2
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "size correctness in *: cbomkit 1.0/1, cryptobom-forge 1.0/2",
+     "backed off 3 facet(s) from assetType=related-crypto-material;family=aes;subtype=secret-key to *; relevance 0.69",
+     "P(cbomkit more reliable) = 0.638 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {},
+    "attribute": null
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": null,
+    "category": {},
+    "categoryUsed": {},
+    "backoffSteps": 0,
+    "tier": "head-to-head",
+    "pABetter": 0.002,
+    "relevance": 1.0,
+    "confidence": 0.998,
+    "decision": "prefer-b",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cbomkit": 0.002,
+     "cryptobom-forge": 0.998
+    },
+    "support": {
+     "disagreements": 8,
+     "counts": {
+      "aWins": 0,
+      "bWins": 8,
+      "bothWrong": 0,
+      "agree": 10,
+      "agreeWrong": 0,
+      "aOnly": 6,
+      "bOnly": 1,
+      "bothMissed": 3,
+      "compared": 18
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on * in *: cbomkit right 0x, cryptobom-forge right 8x, both wrong 0x, agreed 10x",
+     "P(cbomkit more reliable) = 0.002 -> prefer-b"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "semgrep",
+    "category": {
+     "assetType": "algorithm"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "semgrep",
+    "attribute": "primitive",
+    "category": {
+     "assetType": "algorithm"
+    },
+    "categoryUsed": {},
+    "backoffSteps": 1,
+    "tier": "attribute",
+    "pABetter": 0.6449,
+    "relevance": 0.8696,
+    "confidence": 0.6449,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.6449,
+     "semgrep": 0.3551
+    },
+    "support": {
+     "cbomkit": {
+      "correct": 9.0,
+      "reported": 13
+     },
+     "semgrep": {
+      "correct": 0.0,
+      "reported": 0
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "semgrep": null
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "primitive correctness in *: cbomkit 9.0/13, semgrep 0.0/0",
+     "backed off 1 facet(s) from assetType=algorithm to *; relevance 0.87",
+     "P(cbomkit more reliable) = 0.645 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "category": "language=Java;subtype=hash",
+    "attribute": "family"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "attribute": "identity",
+    "category": {
+     "language": "Java",
+     "subtype": "hash"
+    },
+    "categoryUsed": {
+     "subtype": "hash"
+    },
+    "backoffSteps": 1,
+    "tier": "category",
+    "pABetter": 0.7102,
+    "relevance": 0.8696,
+    "confidence": 0.7102,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.7102,
+     "cdxgen": 0.2898
+    },
+    "support": {
+     "cbomkit": {
+      "score": 0.9417,
+      "support": 6
+     },
+     "cdxgen": {
+      "score": 0.7783,
+      "support": 6
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cdxgen": "13.7.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "composite score in subtype=hash: cbomkit 0.942 (n=6), cdxgen 0.778 (n=6)",
+     "backed off 1 facet(s) from language=Java;subtype=hash to subtype=hash; relevance 0.87",
+     "P(cbomkit more reliable) = 0.710 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "assetType": "algorithm",
+     "subtype": "ae"
+    },
+    "attribute": "mode"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "mode",
+    "category": {
+     "assetType": "algorithm",
+     "subtype": "ae"
+    },
+    "categoryUsed": {},
+    "backoffSteps": 2,
+    "tier": "attribute",
+    "pABetter": 0.4573,
+    "relevance": 0.7692,
+    "confidence": 0.5427,
+    "decision": "undecided",
+    "preferred": null,
+    "weights": {
+     "cbomkit": 0.4573,
+     "cryptobom-forge": 0.5427
+    },
+    "support": {
+     "cbomkit": {
+      "correct": 3.0,
+      "reported": 3
+     },
+     "cryptobom-forge": {
+      "correct": 4.0,
+      "reported": 4
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "mode correctness in *: cbomkit 3.0/3, cryptobom-forge 4.0/4",
+     "backed off 2 facet(s) from assetType=algorithm;subtype=ae to *; relevance 0.77",
+     "P(cbomkit more reliable) = 0.457 -> undecided"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "assetType": "algorithm"
+    },
+    "attribute": "parameterSetIdentifier",
+    "valueA": "128",
+    "valueB": null
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "parameterSetIdentifier",
+    "category": {
+     "assetType": "algorithm"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm"
+    },
+    "backoffSteps": 0,
+    "tier": "completeness",
+    "pABetter": 0.375,
+    "relevance": 1.0,
+    "confidence": 0.625,
+    "decision": "prefer-b",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cbomkit": 0.375,
+     "cryptobom-forge": 0.625
+    },
+    "support": {
+     "cbomkit": {
+      "correct": 2.0,
+      "reported": 6
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "cryptobom-forge reported no value; cbomkit reports parameterSetIdentifier correctly 2.0/6 times in assetType=algorithm",
+     "P(cbomkit more reliable) = 0.375 -> prefer-b"
+    ],
+    "valueEvidence": {
+     "cbomkit": {
+      "value": "128",
+      "timesReported": 2,
+      "timesCorrect": 2.0
+     }
+    }
+   }
+  }
+ ],
+ "priors": [
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "primitive",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm"
+    },
+    "backoffSteps": 3,
+    "tier": "head-to-head",
+    "pABetter": 0.1767,
+    "relevance": 0.6897,
+    "confidence": 0.8233,
+    "decision": "prefer-b",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cbomkit": 0.1767,
+     "cryptobom-forge": 0.8233
+    },
+    "support": {
+     "disagreements": 4,
+     "counts": {
+      "aWins": 0,
+      "bWins": 4,
+      "bothWrong": 0,
+      "agree": 3,
+      "agreeWrong": 0,
+      "aOnly": 0,
+      "bOnly": 0,
+      "bothMissed": 0,
+      "compared": 7
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on primitive in assetType=algorithm: cbomkit right 0x, cryptobom-forge right 4x, both wrong 0x, agreed 3x",
+     "backed off 3 facet(s) from assetType=algorithm;family=aes;language=Java;subtype=ae to assetType=algorithm; relevance 0.69",
+     "P(cbomkit more reliable) = 0.177 -> prefer-b"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cryptobom-forge",
+    "toolB": "cbomkit",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cryptobom-forge",
+    "toolB": "cbomkit",
+    "attribute": "primitive",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm"
+    },
+    "backoffSteps": 3,
+    "tier": "head-to-head",
+    "pABetter": 0.8233,
+    "relevance": 0.6897,
+    "confidence": 0.8233,
+    "decision": "prefer-a",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cryptobom-forge": 0.8233,
+     "cbomkit": 0.1767
+    },
+    "support": {
+     "disagreements": 4,
+     "counts": {
+      "aWins": 4,
+      "bWins": 0,
+      "bothWrong": 0,
+      "agree": 3,
+      "agreeWrong": 0,
+      "aOnly": 0,
+      "bOnly": 0,
+      "bothMissed": 0,
+      "compared": 7
+     }
+    },
+    "toolVersions": {
+     "cryptobom-forge": "1.1.0",
+     "cbomkit": "2.3.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on primitive in assetType=algorithm: cryptobom-forge right 4x, cbomkit right 0x, both wrong 0x, agreed 3x",
+     "backed off 3 facet(s) from assetType=algorithm;family=aes;language=Java;subtype=ae to assetType=algorithm; relevance 0.69",
+     "P(cryptobom-forge more reliable) = 0.823 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "language": "Go",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "primitive",
+    "category": {
+     "language": "Go",
+     "assetType": "algorithm",
+     "subtype": "ae",
+     "family": "aes"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm"
+    },
+    "backoffSteps": 3,
+    "tier": "head-to-head",
+    "pABetter": 0.1767,
+    "relevance": 0.6897,
+    "confidence": 0.8233,
+    "decision": "prefer-b",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cbomkit": 0.1767,
+     "cryptobom-forge": 0.8233
+    },
+    "support": {
+     "disagreements": 4,
+     "counts": {
+      "aWins": 0,
+      "bWins": 4,
+      "bothWrong": 0,
+      "agree": 3,
+      "agreeWrong": 0,
+      "aOnly": 0,
+      "bOnly": 0,
+      "bothMissed": 0,
+      "compared": 7
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on primitive in assetType=algorithm: cbomkit right 0x, cryptobom-forge right 4x, both wrong 0x, agreed 3x",
+     "backed off 3 facet(s) from assetType=algorithm;family=aes;language=Go;subtype=ae to assetType=algorithm; relevance 0.69",
+     "P(cbomkit more reliable) = 0.177 -> prefer-b"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "category": {
+     "language": "Python",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "attribute": "primitive",
+    "category": {
+     "language": "Python",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm",
+     "subtype": "hash"
+    },
+    "backoffSteps": 2,
+    "tier": "category",
+    "pABetter": 0.6859,
+    "relevance": 0.7692,
+    "confidence": 0.6859,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.6859,
+     "cdxgen": 0.3141
+    },
+    "support": {
+     "cbomkit": {
+      "score": 0.9417,
+      "support": 6
+     },
+     "cdxgen": {
+      "score": 0.7783,
+      "support": 6
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cdxgen": "13.7.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "composite score in assetType=algorithm;subtype=hash: cbomkit 0.942 (n=6), cdxgen 0.778 (n=6)",
+     "backed off 2 facet(s) from assetType=algorithm;family=sha2;language=Python;subtype=hash to assetType=algorithm;subtype=hash; relevance 0.77",
+     "P(cbomkit more reliable) = 0.686 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "attribute": "oid"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "attribute": "oid",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm"
+    },
+    "backoffSteps": 3,
+    "tier": "head-to-head",
+    "pABetter": 0.8017,
+    "relevance": 0.6897,
+    "confidence": 0.8017,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.8017,
+     "cdxgen": 0.1983
+    },
+    "support": {
+     "disagreements": 3,
+     "counts": {
+      "aWins": 3,
+      "bWins": 0,
+      "bothWrong": 0,
+      "agree": 1,
+      "agreeWrong": 0,
+      "aOnly": 0,
+      "bOnly": 0,
+      "bothMissed": 1,
+      "compared": 5
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cdxgen": "13.7.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on oid in assetType=algorithm: cbomkit right 3x, cdxgen right 0x, both wrong 0x, agreed 1x",
+     "backed off 3 facet(s) from assetType=algorithm;family=sha2;language=Java;subtype=hash to assetType=algorithm; relevance 0.69",
+     "P(cbomkit more reliable) = 0.802 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cdxgen",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "language": "Python",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "attribute": "parameterSet"
+   },
+   "answer": {
+    "toolA": "cdxgen",
+    "toolB": "cryptobom-forge",
+    "attribute": "parameterSetIdentifier",
+    "category": {
+     "language": "Python",
+     "assetType": "algorithm",
+     "subtype": "hash",
+     "family": "sha2"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm",
+     "subtype": "hash"
+    },
+    "backoffSteps": 2,
+    "tier": "category",
+    "pABetter": 0.8815,
+    "relevance": 0.7692,
+    "confidence": 0.8815,
+    "decision": "prefer-a",
+    "preferred": "cdxgen",
+    "weights": {
+     "cdxgen": 0.8815,
+     "cryptobom-forge": 0.1185
+    },
+    "support": {
+     "cdxgen": {
+      "score": 0.7783,
+      "support": 6
+     },
+     "cryptobom-forge": {
+      "score": 0.0,
+      "support": 6
+     }
+    },
+    "toolVersions": {
+     "cdxgen": "13.7.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "composite score in assetType=algorithm;subtype=hash: cdxgen 0.778 (n=6), cryptobom-forge 0.000 (n=6)",
+     "backed off 2 facet(s) from assetType=algorithm;family=sha2;language=Python;subtype=hash to assetType=algorithm;subtype=hash; relevance 0.77",
+     "P(cdxgen more reliable) = 0.882 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm"
+    },
+    "attribute": "executionEnvironment"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "attribute": "executionEnvironment",
+    "category": {
+     "language": "Java",
+     "assetType": "algorithm"
+    },
+    "categoryUsed": {
+     "language": "Java",
+     "assetType": "algorithm"
+    },
+    "backoffSteps": 0,
+    "tier": "category",
+    "pABetter": 0.781,
+    "relevance": 1.0,
+    "confidence": 0.781,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.781,
+     "cdxgen": 0.219
+    },
+    "support": {
+     "cbomkit": {
+      "score": 0.8939,
+      "support": 6
+     },
+     "cdxgen": {
+      "score": 0.6806,
+      "support": 6
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cdxgen": "13.7.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "composite score in assetType=algorithm;language=Java: cbomkit 0.894 (n=6), cdxgen 0.681 (n=6)",
+     "P(cbomkit more reliable) = 0.781 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "assetType": "related-crypto-material",
+     "subtype": "secret-key",
+     "family": "aes"
+    },
+    "attribute": "size"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "size",
+    "category": {
+     "assetType": "related-crypto-material",
+     "subtype": "secret-key",
+     "family": "aes"
+    },
+    "categoryUsed": {},
+    "backoffSteps": 3,
+    "tier": "global",
+    "pABetter": 0.5265,
+    "relevance": 0.6897,
+    "confidence": 0.5265,
+    "decision": "undecided",
+    "preferred": null,
+    "weights": {
+     "cbomkit": 0.5265,
+     "cryptobom-forge": 0.4735
+    },
+    "support": {
+     "cbomkit": {
+      "score": 0.8027,
+      "support": 18
+     },
+     "cryptobom-forge": {
+      "score": 0.7889,
+      "support": 18
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "composite score in *: cbomkit 0.803 (n=18), cryptobom-forge 0.789 (n=18)",
+     "backed off 3 facet(s) from assetType=related-crypto-material;family=aes;subtype=secret-key to *; relevance 0.69",
+     "P(cbomkit more reliable) = 0.527 -> undecided"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {},
+    "attribute": null
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": null,
+    "category": {},
+    "categoryUsed": {},
+    "backoffSteps": 0,
+    "tier": "head-to-head",
+    "pABetter": 0.002,
+    "relevance": 1.0,
+    "confidence": 0.998,
+    "decision": "prefer-b",
+    "preferred": "cryptobom-forge",
+    "weights": {
+     "cbomkit": 0.002,
+     "cryptobom-forge": 0.998
+    },
+    "support": {
+     "disagreements": 8,
+     "counts": {
+      "aWins": 0,
+      "bWins": 8,
+      "bothWrong": 0,
+      "agree": 10,
+      "agreeWrong": 0,
+      "aOnly": 6,
+      "bOnly": 1,
+      "bothMissed": 3,
+      "compared": 18
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "head-to-head on * in *: cbomkit right 0x, cryptobom-forge right 8x, both wrong 0x, agreed 10x",
+     "P(cbomkit more reliable) = 0.002 -> prefer-b"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "semgrep",
+    "category": {
+     "assetType": "algorithm"
+    },
+    "attribute": "primitive"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "semgrep",
+    "attribute": "primitive",
+    "category": {
+     "assetType": "algorithm"
+    },
+    "categoryUsed": {},
+    "backoffSteps": 1,
+    "tier": "none",
+    "pABetter": 0.5,
+    "relevance": 0.8696,
+    "confidence": 0.5,
+    "decision": "undecided",
+    "preferred": null,
+    "weights": {
+     "cbomkit": 0.5,
+     "semgrep": 0.5
+    },
+    "support": {},
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "semgrep": null
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "no evidence for either tool",
+     "backed off 1 facet(s) from assetType=algorithm to *; relevance 0.87",
+     "P(cbomkit more reliable) = 0.500 -> undecided"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "category": "language=Java;subtype=hash",
+    "attribute": "family"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cdxgen",
+    "attribute": "identity",
+    "category": {
+     "language": "Java",
+     "subtype": "hash"
+    },
+    "categoryUsed": {
+     "subtype": "hash"
+    },
+    "backoffSteps": 1,
+    "tier": "category",
+    "pABetter": 0.7102,
+    "relevance": 0.8696,
+    "confidence": 0.7102,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.7102,
+     "cdxgen": 0.2898
+    },
+    "support": {
+     "cbomkit": {
+      "score": 0.9417,
+      "support": 6
+     },
+     "cdxgen": {
+      "score": 0.7783,
+      "support": 6
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cdxgen": "13.7.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "composite score in subtype=hash: cbomkit 0.942 (n=6), cdxgen 0.778 (n=6)",
+     "backed off 1 facet(s) from language=Java;subtype=hash to subtype=hash; relevance 0.87",
+     "P(cbomkit more reliable) = 0.710 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "assetType": "algorithm",
+     "subtype": "ae"
+    },
+    "attribute": "mode"
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "mode",
+    "category": {
+     "assetType": "algorithm",
+     "subtype": "ae"
+    },
+    "categoryUsed": {
+     "assetType": "algorithm"
+    },
+    "backoffSteps": 1,
+    "tier": "category",
+    "pABetter": 0.6076,
+    "relevance": 0.8696,
+    "confidence": 0.6076,
+    "decision": "prefer-a",
+    "preferred": "cbomkit",
+    "weights": {
+     "cbomkit": 0.6076,
+     "cryptobom-forge": 0.3924
+    },
+    "support": {
+     "cbomkit": {
+      "score": 0.8463,
+      "support": 14
+     },
+     "cryptobom-forge": {
+      "score": 0.7964,
+      "support": 14
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "composite score in assetType=algorithm: cbomkit 0.846 (n=14), cryptobom-forge 0.796 (n=14)",
+     "backed off 1 facet(s) from assetType=algorithm;subtype=ae to assetType=algorithm; relevance 0.87",
+     "P(cbomkit more reliable) = 0.608 -> prefer-a"
+    ],
+    "valueEvidence": {}
+   }
+  },
+  {
+   "query": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "category": {
+     "assetType": "algorithm"
+    },
+    "attribute": "parameterSetIdentifier",
+    "valueA": "128",
+    "valueB": null
+   },
+   "answer": {
+    "toolA": "cbomkit",
+    "toolB": "cryptobom-forge",
+    "attribute": "parameterSetIdentifier",
+    "category": {
+     "assetType": "algorithm"
+    },
+    "categoryUsed": {},
+    "backoffSteps": 1,
+    "tier": "completeness",
+    "pABetter": 0.5,
+    "relevance": 0.8696,
+    "confidence": 0.5,
+    "decision": "undecided",
+    "preferred": null,
+    "weights": {
+     "cbomkit": 0.5,
+     "cryptobom-forge": 0.5
+    },
+    "support": {
+     "cbomkit": {
+      "correct": 0.0,
+      "reported": 0
+     }
+    },
+    "toolVersions": {
+     "cbomkit": "2.3.0",
+     "cryptobom-forge": "1.1.0"
+    },
+    "scoringModelVersion": "1.0",
+    "explanation": [
+     "cryptobom-forge reported no value; cbomkit reports parameterSetIdentifier correctly 0.0/0 times in *",
+     "backed off 1 facet(s) from assetType=algorithm to *; relevance 0.87",
+     "P(cbomkit more reliable) = 0.500 -> undecided"
+    ],
+    "valueEvidence": {}
+   }
+  }
+ ]
+}

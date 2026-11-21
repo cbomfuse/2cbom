@@ -9,11 +9,12 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from ..engine.facts import Alias, Assessment, Asset, Conflict, Evidence, Relation, Resolved, Suite, U
+from ..benchmark import normalize_version
+from ..engine.facts import Alias, Assessment, Asset, Conflict, Evidence, Relation, Resolved, Source, Suite, U
 from ..engine.rules import rule
 from ..model import (CERTIFICATION_LEVELS, CRYPTO_FUNCTIONS, CURVES, EXECUTION_ENVIRONMENTS, MATERIAL_STATES,
                      MATERIAL_TYPES, MODES, PADDINGS, PRIMITIVES, PROTOCOL_TYPES)
-from .common import KB, descriptor_of, finding, resolved, severity
+from .common import KB, benchmark_of, descriptor_of, finding, resolved, severity
 
 _VOCAB = {
     "primitive": PRIMITIVES, "mode": MODES, "padding": PADDINGS, "curve": CURVES,
@@ -234,7 +235,41 @@ def _(wm, c):
     if c.rule == "settle.kb-authoritative":
         return [finding("2CBOM-C13-LEVEL-INCONSISTENT" if c.name in ("classicalSecurityLevel", "nistQuantumSecurityLevel") else "2CBOM-C14-SOURCE-CONFLICT",
                         "warning", c.cid, f"{c.name}: catalogue value {U(c.chosen_json)!r} overrides {desc}", "check.C13-C14-conflicts")]
-    return [finding("2CBOM-C14-SOURCE-CONFLICT", "info", c.cid, f"{c.name}: sources disagree ({desc}); chose {U(c.chosen_json)!r} by precedence", "check.C13-C14-conflicts")]
+    how = "by benchmark preference" if c.rule == "settle.benchmark-preference" else "by precedence"
+    answers = U(c.reconciliation_json) if c.reconciliation_json else []
+    if answers:
+        how += " (" + "; ".join(_answer_text(r) for r in answers) + ")"
+    return [finding("2CBOM-C14-SOURCE-CONFLICT", "info", c.cid, f"{c.name}: sources disagree ({desc}); chose {U(c.chosen_json)!r} {how}", "check.C13-C14-conflicts")]
+
+
+def _answer_text(r: dict) -> str:
+    pair = f"{r['toolA']} vs {r['toolB']}"
+    used = ";".join(f"{k}={v}" for k, v in sorted((r.get("categoryUsed") or {}).items())) or "all items"
+    if r.get("preferred"):
+        return f"{pair}: benchmark prefers {r['preferred']}, confidence {r['confidence']}, {r['tier']} evidence in {used}"
+    return f"{pair}: benchmark undecided, confidence {r['confidence']}, {r['tier']} evidence in {used}"
+
+
+@rule("check.I03-benchmark-version", 300, "check",
+      "I03: record sources produced by a tool version other than the one the benchmark measured.")
+def r_i03(wm):
+    bench = benchmark_of(wm)
+    if bench is None:
+        return
+    for s in wm.get(Source):
+        if not s.tool_version or not bench.is_benchmarked(s.tool):
+            continue
+        measured = bench.benchmarked_versions(s.tool)
+        if measured and normalize_version(s.tool_version) not in measured:
+            yield (s,)
+
+
+@r_i03.then
+def _(wm, s):
+    measured = ", ".join(sorted(benchmark_of(wm).benchmarked_versions(s.tool)))
+    return [finding("2CBOM-I03-UNBENCHMARKED-VERSION", "info", s.sid,
+                    f"{s.tool} {s.tool_version} produced this source, but the benchmark measured {s.tool} {measured}; "
+                    "its benchmark trust and priors may not carry over to this version", "check.I03-benchmark-version")]
 
 
 @rule("check.C15-weak-identity", 300, "check", "C15: certificates and key material should be identified by fingerprint or stable identifier.")

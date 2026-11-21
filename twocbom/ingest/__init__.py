@@ -76,6 +76,7 @@ def ingest_document(doc: dict, path: str = "<memory>", digest: Optional[str] = N
         result = cyclonedx.ingest(doc, source)
     if tool_override:
         result.source.tool = tool_override
+        result.source.tools = [(tool_override, result.source.tool_version)]
     return result
 
 
